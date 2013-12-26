@@ -1,0 +1,69 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <!-- 往来单位管理——联系人信息 -->
+    <bean name="/contacterService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="contacterServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.ContacterService" />
+    </bean>
+
+    <!-- 往来单位下合同管理 -->
+    <bean name="/contractService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="contractServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.ContractService" />
+    </bean>
+    <!-- 往来单位管理 -->
+    <bean name="/companyService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="companyServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.CompanyService" />
+    </bean>
+
+    <!-- 货物管理-->
+    <bean name="/goodsService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="goodsServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.GoodsService" />
+    </bean>
+    <!-- 货物管理所需其他Service -->
+    <bean name="/mpGoodsCompanyService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="mpGoodsCompanyServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.MpGoodsCompanyService" />
+    </bean>
+
+
+    <!-- 报价管理 -->
+    <bean name="/offerService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="offerServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.OfferService" />
+    </bean>
+    <bean name="/freightService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="freightServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.FreightService" />
+    </bean>
+    <!-- 分公司服务 -->
+    <bean name="/subCompanyService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="subCompanyServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.SubCompanyService" />
+    </bean>
+    
+    
+    <!-- 报价单 -->
+    <bean name="/quotationWholeService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="quotationWholeServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.QuotationWholeService" />
+    </bean>
+     <bean name="/quotationPartloadService"
+          class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="quotationPartloadServiceImpl" />
+        <property name="serviceInterface" value="com.ctfo.lmis.api.basic.QuotationPartloadService" />
+    </bean>
+    
+</beans>
