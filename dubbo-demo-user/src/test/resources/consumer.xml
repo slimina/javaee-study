@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	 <!-- 
+    
+    具体项配置：参考http://alibaba.github.io/dubbo-doc-static/User+Guide-zh.htm#UserGuide-zh-%E6%B3%A8%E8%A7%A3API
+     -->
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="dubbo-demo-user-client" />
+
+	
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+   <dubbo:registry protocol="zookeeper" address="192.168.36.91:2181,192.168.36.127:2181" />
+   
+   
+   
+      <!-- 通过注册中心发现监控中心服务
+    或
+<dubbo:monitor address="127.0.0.1:7070" />
+      -->
+    <dubbo:monitor protocol="registry" />
+   
+
+	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+	<dubbo:reference id="userService"
+		interface="cn.slimsmart.dubbo.demo.user.UserService" />
+
+</beans>

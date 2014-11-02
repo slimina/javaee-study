@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    
+    <!-- 
+    
+    具体项配置：参考http://alibaba.github.io/dubbo-doc-static/User+Guide-zh.htm#UserGuide-zh-%E6%B3%A8%E8%A7%A3API
+     -->
+ 
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="dubbo-demo-user-server"  />
+    
+    
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+   <dubbo:registry protocol="zookeeper" address="192.168.36.91:2181,192.168.36.127:2181" />
+   
+    
+    <!-- 通过注册中心发现监控中心服务
+    或
+<dubbo:monitor address="127.0.0.1:7070" />
+      -->
+    <dubbo:monitor protocol="registry" />
+    
+ 
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20881" />
+ 
+    <!-- 可以使用注解
+    	扫描注解包路径，多个包用逗号分隔，不填pacakge表示扫描当前ApplicationContext中所有的类
+    	<dubbo:annotation package="com.foo.bar.service" />
+      -->
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="cn.slimsmart.dubbo.demo.user.UserService" ref="userService"  />
+ 
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="userService" class="cn.slimsmart.dubbo.demo.user.UserServiceImpl" />
+ 
+</beans>
