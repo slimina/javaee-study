@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <!-- 创建connectionFactory -->
+    <bean id="rabbitConnectionFactory"
+      class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+	    <constructor-arg value="${rabbit.hosts}"/>
+	    <property name="username" value="${rabbit.username}"/>
+	    <property name="password" value="${rabbit.password}"/>
+<!-- 	    <property name="virtualHost" value="${rabbit.virtualHost}"/> -->
+	    <property name="channelCacheSize" value="25"/>
+	</bean>
+    
+	<!-- 创建rabbitAdmin 代理类 -->
+<!-- 	<bean id="rabbitAdmin" -->
+<!-- 		class="org.springframework.amqp.rabbit.core.RabbitAdmin"> -->
+<!-- 		<constructor-arg ref="rabbitConnectionFactory" /> -->
+<!-- 	</bean> -->
+	
+	<!-- 创建rabbitTemplate 消息模板类 -->
+<!-- 	<bean id="smsRabbitTemplate" -->
+<!-- 		class="org.springframework.amqp.rabbit.core.RabbitTemplate"> -->
+<!-- 		<constructor-arg ref="rabbitConnectionFactory"></constructor-arg> -->
+<!-- 		<property name="queue" value="${rabbit.queue}"></property> -->
+<!-- 	</bean> -->
+	
+	<!-- 声明Queue并设定Queue的名称 -->
+<!-- 	<bean id="smsQueue" -->
+<!-- 		class="org.springframework.amqp.core.Queue"> -->
+<!-- 		<constructor-arg value="${rabbit.queue}"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+	<!-- 声明消息转换器为SimpleMessageConverter -->
+	<bean id="messageConverter"
+		class="org.springframework.amqp.support.converter.SimpleMessageConverter">
+	</bean>
+	
+	<!-- 声明Exchange的类型为topic并设定Exchange的名称 -->
+<!-- 	<bean id="hellotopic" -->
+<!-- 		class="org.springframework.amqp.core.TopicExchange"> -->
+<!-- 		<constructor-arg value="hello.topic"></constructor-arg> -->
+<!-- 	</bean> -->
+
+	<!-- 声明Exchange的类型为direct并设定Exchange的名称 -->
+<!-- 	<bean id="hellodirect" -->
+<!-- 		class="org.springframework.amqp.core.DirectExchange"> -->
+<!-- 		<constructor-arg value="hello.direct"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+	<!-- 通过Binding来判定Queue、Exchange、routingKey -->
+	<!-- 其中构建Binding的参数1是Queue，参数2是Exchange，参数3是routingKey -->
+<!-- 	<bean id="queuebling" -->
+<!-- 		class="org.springframework.amqp.core.Binding"> -->
+<!-- 		<constructor-arg index="0" ref="helloWorldQueue"></constructor-arg> -->
+<!-- 		<constructor-arg index="1" ref="hellotopic"></constructor-arg> -->
+<!-- 		<constructor-arg index="2" value="hello.world.#"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+	<!-- 监听生产者发送的消息开始 -->
+	<!-- 用于接收消息的处理类 -->
+	<bean id="rpcHandler" class="cn.slimsmart.rabbitmq.demo.spring.rpc.RPCInvoke">
+	</bean>
+	<!-- 用于消息的监听的代理类MessageListenerAdapter -->
+	<bean id="rpcListenerAdapter"
+		class="org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="rpcHandler" />
+		<property name="defaultListenerMethod" value="getMd5String"></property>
+		<property name="messageConverter" ref="messageConverter"></property>
+	</bean>
+	
+	<!-- 用于消息的监听的容器类SimpleMessageListenerContainer，对于queueName的值一定要与定义的Queue的值相同 -->
+	<bean id="rpclistenerContainer"
+		class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
+		<property name="queueNames" value="${rabbit.queue}"></property>
+		<property name="connectionFactory" ref="rabbitConnectionFactory"></property>
+		<property name="messageListener" ref="rpcListenerAdapter"></property>
+	</bean>
+	<!-- 监听生产者发送的消息结束 -->
+
+</beans>
