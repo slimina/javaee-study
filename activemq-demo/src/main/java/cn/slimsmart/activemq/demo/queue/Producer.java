@@ -11,7 +11,8 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-public class Sender {
+//队列
+public class Producer {
 
 	public static void main(String[] args) throws Exception {
 		// 连接工厂，JMS 用它创建连接
@@ -23,8 +24,8 @@ public class Sender {
 		connection.start();
 		// 获取操作连接 一个发送或接收消息的线程
 		Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
-		// 获取session注意参数值xingbo.xu-queue是一个服务器的queue，须在在ActiveMq的console配置
-		Destination destination = session.createQueue("FirstQueue");
+		// 获取session注意参数值slimsmart.queue是一个服务器的queue，须在在ActiveMq的console配置
+		Destination destination = session.createQueue("slimsmart.queue.aaaa");
 		// 得到消息生成者【发送者】
 		MessageProducer producer = session.createProducer(destination);
 		// 设置持久化，
