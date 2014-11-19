@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+			http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+			http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
+
+	<!-- 带缓存功能的连接工厂 -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory"
+		destroy-method="destroy">
+		<property name="targetConnectionFactory">
+			<bean class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+				<!-- tcp连接字符串 -->
+				<property name="brokerURL">
+					<value>failover:(tcp://192.168.110.71:61616?wireFormat.maxInactivityDuration=300000&amp;wireFormat.maxInactivityDurationInitalDelay=120000)</value>
+				</property>
+				<property name="copyMessageOnSend" value="false" />
+				<property name="optimizeAcknowledge" value="false" />
+				<property name="redeliveryPolicy">
+					<bean class="org.apache.activemq.RedeliveryPolicy">
+						<!--  接收失败，最多发6次   -->
+						<property name="maximumRedeliveries" value="6" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="sessionCacheSize" value="10" />
+		<property name="cacheConsumers" value="true" />
+		<property name="cacheProducers" value="true" />
+	</bean>
+	
+	<!-- 定义队列 -->
+	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<property name="physicalName" value="test.queue" />
+	</bean>
+	
+	<!-- 
+	DefaultMessageListenerContainer继承自AbstractPollingMessageListenerContainer，
+	主要使用同步的方式接收消息（也就是通过循环调用MessageConsumer.receive的方式接收消息）。
+	 -->
+    <!-- 异步接收Queue消息Container -->  
+    <bean id="queueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="testQueue" />  
+        <property name="messageListener" ref="notifyMessageListener" />  
+        <!-- 初始5个Consumer, 可动态扩展到10 -->  
+        <property name="concurrentConsumers" value="5" />  
+        <property name="maxConcurrentConsumers" value="10" />  
+        <property name="sessionTransacted" value="false" />
+        <!-- 设置消息确认模式为Client -->  
+        <property name="sessionAcknowledgeModeName" value="CLIENT_ACKNOWLEDGE" />  
+    </bean>  
+</beans>
