@@ -1,0 +1,21 @@
+Callable 和 Future 是比较有趣的一对组合。当我们需要获取线程的执行结果时，就需要用到它们。Callable用于产生结果，Future用于获取结果。
+1. Callable
+Callable 是一个接口，它只包含一个call()方法。Callable是一个返回结果并且可能抛出异常的任务。
+为了便于理解，我们可以将Callable比作一个Runnable接口，而Callable的call()方法则类似于Runnable的run()方法。
+
+2. Future
+Future 是一个接口。它用于表示异步计算的结果。提供了检查计算是否完成的方法，以等待计算的完成，并获取计算的结果。
+// 试图取消对此任务的执行。
+boolean cancel(boolean mayInterruptIfRunning)
+// 如果在任务正常完成前将其取消，则返回 true。
+boolean isCancelled()
+// 如果任务已完成，则返回 true。
+boolean isDone()
+// 如有必要，等待计算完成，然后获取其结果。
+V   get() throws InterruptedException, ExecutionException;
+// 如有必要，最多等待为使计算完成所给定的时间之后，获取其结果（如果结果可用）。
+V get(long timeout, TimeUnit unit)throws InterruptedException, ExecutionException, TimeoutException;
+
+Future用于表示异步计算的结果。它的实现类是FutureTask
+RunnableFuture是一个接口，它继承了Runnable和Future这两个接口
+FutureTask实现了RunnableFuture接口。所以，我们也说它实现了Future接口。
