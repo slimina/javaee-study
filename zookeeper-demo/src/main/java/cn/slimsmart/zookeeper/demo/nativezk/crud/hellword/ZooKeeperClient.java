@@ -1,4 +1,4 @@
-package cn.slimsmart.zookeeper.demo.hellword;
+package cn.slimsmart.zookeeper.demo.nativezk.crud.hellword;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
