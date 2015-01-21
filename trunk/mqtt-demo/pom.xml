@@ -3,4 +3,7 @@
   <groupId>cn.smartslim.mqtt.demo</groupId>
   <artifactId>mqtt-demo</artifactId>
   <version>1.0.0</version>
+  
+  <dependencies>
+  </dependencies>
 </project>
