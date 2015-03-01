@@ -3,8 +3,6 @@ package cn.slimsmart.thrift.demo.proxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.slimsmart.thrift.demo.spring.proxy.ThriftServerProxy;
-
 public class ServerTest {
 
 	@SuppressWarnings("resource")

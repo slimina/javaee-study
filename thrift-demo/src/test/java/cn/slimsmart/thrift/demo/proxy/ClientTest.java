@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.slimsmart.thrift.demo.helloworld.HelloWorld;
-import cn.slimsmart.thrift.demo.spring.proxy.ThriftClientProxy;
 
 public class ClientTest {
 	@SuppressWarnings("resource")

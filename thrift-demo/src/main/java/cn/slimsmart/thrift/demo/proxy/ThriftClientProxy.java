@@ -1,4 +1,4 @@
-package cn.slimsmart.thrift.demo.spring.proxy;
+package cn.slimsmart.thrift.demo.proxy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

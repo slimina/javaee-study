@@ -8,24 +8,13 @@
 				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
 	default-lazy-init="true">
 	<description>thrift配置文件 </description>
-	<!-- 连接池配置 -->
-	<bean id="connectionProvider" class="cn.slimsmart.thrift.demo.pool.ConnectionProviderImpl">
-		<property name="serviceIP" value="127.0.0.1" />
-		<property name="servicePort" value="8080" />
-		<property name="maxActive" value="10" />
-		<property name="maxIdle" value="10" />
-		<property name="testOnBorrow" value="true" />
-		<property name="testOnReturn" value="true" />
-		<property name="testWhileIdle" value="true" />
-		<property name="conTimeOut" value="2000" />
+	<bean id="thriftServletClientProxy" class="cn.slimsmart.thrift.demo.spring.servlet.ThriftServletClientProxy">
+		<property name="servletUrl">
+			<value>
+				http://127.0.0.1:8080/thrift-demo/helloworldServletProxy.do
+			</value>
+		</property>
+		<property name="serviceInterface" value="cn.slimsmart.thrift.demo.helloworld.HelloWorld">
+		</property>
 	</bean>
-	
-	<bean id="connectionManager" class="cn.slimsmart.thrift.demo.pool.ConnectionManager">
-		<property name="connectionProvider"  ref="connectionProvider"/>
-	</bean>
-	
-	<bean id="thriftClientProxy" class="cn.slimsmart.thrift.demo.proxy.ThriftClientProxy">
-		<property name="connectionManager" ref="connectionManager"/>
-	</bean>
-	
 </beans>
