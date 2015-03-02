@@ -9,7 +9,5 @@
 	default-lazy-init="true">
 
 	<description>spring invoker服务</description>
-
 	<bean id="userServiceimpl" class="cn.slimsmart.spring.httpinvoker.demo.UserServiceImpl" />
-
 </beans>
