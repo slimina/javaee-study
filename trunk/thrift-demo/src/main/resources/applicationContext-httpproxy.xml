@@ -7,26 +7,14 @@
 				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
 	default-lazy-init="true">
-
-	<description>spring invoker服务</description>
-
-	<bean id="helloWorldHttpInvoker"
-		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service">
-			<ref bean="helloWorldImpl" />
-		</property>
-		<property name="serviceInterface" value="cn.slimsmart.thrift.demo.helloworld.HelloWorld.Iface">
-		</property>
-	</bean>
-
-	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="mappings">
-			<props>
-				<prop key="/helloWorldHttpInvoker.do">helloWorldHttpInvoker</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="httpRequestHandlerAdapter"
-		class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+	
+	<description>thrift-servlet服务</description>
+	
+    <bean  id="helloWorldImpl" class="cn.slimsmart.thrift.demo.helloworld.HelloWorldImpl"/>
+    
+    <bean name="/helloworldService" class="cn.slimsmart.thrift.demo.spring.http.ThriftHttpServiceExporter">
+        <property name="service" ref="helloWorldImpl" />
+        <property name="serviceInterface" value="cn.slimsmart.thrift.demo.helloworld.HelloWorld"/>
+    </bean>
+	
 </beans>
