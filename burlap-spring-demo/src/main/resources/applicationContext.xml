@@ -9,5 +9,4 @@
 	default-lazy-init="true">
 	
     <bean  id="userServiceImpl" class="cn.slimsmart.burlap.spring.demo.UserServiceImpl"/>
-    
 </beans>
