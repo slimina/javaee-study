@@ -36,17 +36,18 @@ public class Server {
 		PeerInfo serverInfo = new PeerInfo("127.0.0.1", 1234);
 
 		// RPC payloads are uncompressed when logged - so reduce logging
-		// 关闭 减少日志
+		// 关闭 减少日志 或者com.googlecode.protobuf.pro.duplex.logging.nulllogger可以代替的，将不记录任何categoryperservicelogger。
 		CategoryPerServiceLogger logger = new CategoryPerServiceLogger();
 		logger.setLogRequestProto(false);
 		logger.setLogResponseProto(false);
+		
 		// 配置server
 		DuplexTcpServerPipelineFactory serverFactory = new DuplexTcpServerPipelineFactory(serverInfo);
 		// 设置线程池
 		RpcServerCallExecutor rpcExecutor = new ThreadPoolCallExecutor(10, 10);
 		serverFactory.setRpcServerCallExecutor(rpcExecutor);
 		serverFactory.setLogger(logger);
-
+		
 		// 回调
 		final RpcCallback<Message.Msg> clientResponseCallback = new RpcCallback<Message.Msg>() {
 			@Override
@@ -111,7 +112,7 @@ public class Server {
 		while (true) {
 			List<RpcClientChannel> clients = serverFactory.getRpcClientRegistry().getAllClients();
 			for (RpcClientChannel client : clients) {
-				
+				//创建消息
 				Message.Msg msg = Message.Msg.newBuilder().setContent("Server "+ serverFactory.getServerInfo() + " OK@" + System.currentTimeMillis()).build();
 				
 				ChannelFuture oobSend = client.sendOobMessage(msg);

@@ -17,18 +17,20 @@ message Params {
 
 message Msg {
 	optional string content = 1;
-	extensions 100 to 999; 
  }
 
 message Response {
-	extend Msg {
-		// RPC response code
-		required int32 code =100 [default = 0];
-		// RPC response code msg
-		required string msg =101 [default = "请求成功"];
-	}
+	// RPC response code
+	required int32 code =1 [default = 0];
+	// RPC response code msg
+	required string msg =2 [default = "请求成功"];
+	optional string data = 3;
 }
 //interface
 service RpcService {
     rpc call(Request) returns (Response);
+}
+
+service ReplyService {
+	rpc call(Msg) returns (Msg);
 }

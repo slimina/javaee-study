@@ -7,8 +7,6 @@ public final class Message {
   private Message() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registry.add(cn.slimsmart.protoc.demo.rpc.Message.Response.code);
-    registry.add(cn.slimsmart.protoc.demo.rpc.Message.Response.msg);
   }
   public interface RequestOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
@@ -1640,9 +1638,8 @@ public final class Message {
     // @@protoc_insertion_point(class_scope:Params)
   }
 
-  public interface MsgOrBuilder extends
-      com.google.protobuf.GeneratedMessage.
-          ExtendableMessageOrBuilder<Msg> {
+  public interface MsgOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
     // optional string content = 1;
     /**
@@ -1663,10 +1660,10 @@ public final class Message {
    * Protobuf type {@code Msg}
    */
   public static final class Msg extends
-      com.google.protobuf.GeneratedMessage.ExtendableMessage<
-        Msg> implements MsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MsgOrBuilder {
     // Use Msg.newBuilder() to construct.
-    private Msg(com.google.protobuf.GeneratedMessage.ExtendableBuilder<cn.slimsmart.protoc.demo.rpc.Message.Msg, ?> builder) {
+    private Msg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
@@ -1806,10 +1803,6 @@ public final class Message {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
-      if (!extensionsAreInitialized()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1817,13 +1810,9 @@ public final class Message {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      com.google.protobuf.GeneratedMessage
-        .ExtendableMessage<cn.slimsmart.protoc.demo.rpc.Message.Msg>.ExtensionWriter extensionWriter =
-          newExtensionWriter();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getContentBytes());
       }
-      extensionWriter.writeUntil(1000, output);
       getUnknownFields().writeTo(output);
     }
 
@@ -1837,7 +1826,6 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getContentBytes());
       }
-      size += extensionsSerializedSize();
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
@@ -1920,8 +1908,8 @@ public final class Message {
      * Protobuf type {@code Msg}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.ExtendableBuilder<
-          cn.slimsmart.protoc.demo.rpc.Message.Msg, Builder> implements cn.slimsmart.protoc.demo.rpc.Message.MsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements cn.slimsmart.protoc.demo.rpc.Message.MsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return cn.slimsmart.protoc.demo.rpc.Message.internal_static_Msg_descriptor;
@@ -2009,16 +1997,11 @@ public final class Message {
           content_ = other.content_;
           onChanged();
         }
-        this.mergeExtensionFields(other);
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!extensionsAreInitialized()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -2128,6 +2111,66 @@ public final class Message {
 
   public interface ResponseOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
+
+    // required int32 code = 1 [default = 0];
+    /**
+     * <code>required int32 code = 1 [default = 0];</code>
+     *
+     * <pre>
+     * RPC response code
+     * </pre>
+     */
+    boolean hasCode();
+    /**
+     * <code>required int32 code = 1 [default = 0];</code>
+     *
+     * <pre>
+     * RPC response code
+     * </pre>
+     */
+    int getCode();
+
+    // required string msg = 2 [default = "\350\257\267\346\261\202\346\210\220\345\212\237"];
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    boolean hasMsg();
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    java.lang.String getMsg();
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getMsgBytes();
+
+    // optional string data = 3;
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    boolean hasData();
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    java.lang.String getData();
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getDataBytes();
   }
   /**
    * Protobuf type {@code Response}
@@ -2162,6 +2205,7 @@ public final class Message {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       initFields();
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2177,6 +2221,21 @@ public final class Message {
                                      extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              code_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              msg_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              data_ = input.readBytes();
               break;
             }
           }
@@ -2218,13 +2277,147 @@ public final class Message {
       return PARSER;
     }
 
+    private int bitField0_;
+    // required int32 code = 1 [default = 0];
+    public static final int CODE_FIELD_NUMBER = 1;
+    private int code_;
+    /**
+     * <code>required int32 code = 1 [default = 0];</code>
+     *
+     * <pre>
+     * RPC response code
+     * </pre>
+     */
+    public boolean hasCode() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required int32 code = 1 [default = 0];</code>
+     *
+     * <pre>
+     * RPC response code
+     * </pre>
+     */
+    public int getCode() {
+      return code_;
+    }
+
+    // required string msg = 2 [default = "\350\257\267\346\261\202\346\210\220\345\212\237"];
+    public static final int MSG_FIELD_NUMBER = 2;
+    private java.lang.Object msg_;
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    public boolean hasMsg() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    public java.lang.String getMsg() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          msg_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+     *
+     * <pre>
+     * RPC response code msg
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getMsgBytes() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        msg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // optional string data = 3;
+    public static final int DATA_FIELD_NUMBER = 3;
+    private java.lang.Object data_;
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    public boolean hasData() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    public java.lang.String getData() {
+      java.lang.Object ref = data_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          data_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string data = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDataBytes() {
+      java.lang.Object ref = data_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        data_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
+      code_ = 0;
+      msg_ = com.google.protobuf.Internal.stringDefaultValue("\350\257\267\346\261\202\346\210\220\345\212\237");
+      data_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
+      if (!hasCode()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasMsg()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -2232,6 +2425,15 @@ public final class Message {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, code_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getMsgBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getDataBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -2241,6 +2443,18 @@ public final class Message {
       if (size != -1) return size;
 
       size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, code_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getMsgBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getDataBytes());
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
@@ -2357,6 +2571,12 @@ public final class Message {
 
       public Builder clear() {
         super.clear();
+        code_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        msg_ = com.google.protobuf.Internal.stringDefaultValue("\350\257\267\346\261\202\346\210\220\345\212\237");
+        bitField0_ = (bitField0_ & ~0x00000002);
+        data_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -2383,6 +2603,21 @@ public final class Message {
 
       public cn.slimsmart.protoc.demo.rpc.Message.Response buildPartial() {
         cn.slimsmart.protoc.demo.rpc.Message.Response result = new cn.slimsmart.protoc.demo.rpc.Message.Response(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.code_ = code_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.msg_ = msg_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.data_ = data_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -2398,11 +2633,32 @@ public final class Message {
 
       public Builder mergeFrom(cn.slimsmart.protoc.demo.rpc.Message.Response other) {
         if (other == cn.slimsmart.protoc.demo.rpc.Message.Response.getDefaultInstance()) return this;
+        if (other.hasCode()) {
+          setCode(other.getCode());
+        }
+        if (other.hasMsg()) {
+          bitField0_ |= 0x00000002;
+          msg_ = other.msg_;
+          onChanged();
+        }
+        if (other.hasData()) {
+          bitField0_ |= 0x00000004;
+          data_ = other.data_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        if (!hasCode()) {
+          
+          return false;
+        }
+        if (!hasMsg()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -2423,6 +2679,228 @@ public final class Message {
         }
         return this;
       }
+      private int bitField0_;
+
+      // required int32 code = 1 [default = 0];
+      private int code_ ;
+      /**
+       * <code>required int32 code = 1 [default = 0];</code>
+       *
+       * <pre>
+       * RPC response code
+       * </pre>
+       */
+      public boolean hasCode() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required int32 code = 1 [default = 0];</code>
+       *
+       * <pre>
+       * RPC response code
+       * </pre>
+       */
+      public int getCode() {
+        return code_;
+      }
+      /**
+       * <code>required int32 code = 1 [default = 0];</code>
+       *
+       * <pre>
+       * RPC response code
+       * </pre>
+       */
+      public Builder setCode(int value) {
+        bitField0_ |= 0x00000001;
+        code_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 code = 1 [default = 0];</code>
+       *
+       * <pre>
+       * RPC response code
+       * </pre>
+       */
+      public Builder clearCode() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        code_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // required string msg = 2 [default = "\350\257\267\346\261\202\346\210\220\345\212\237"];
+      private java.lang.Object msg_ = com.google.protobuf.Internal.stringDefaultValue("\350\257\267\346\261\202\346\210\220\345\212\237");
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public boolean hasMsg() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public java.lang.String getMsg() {
+        java.lang.Object ref = msg_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          msg_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getMsgBytes() {
+        java.lang.Object ref = msg_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          msg_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public Builder setMsg(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public Builder clearMsg() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        msg_ = getDefaultInstance().getMsg();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string msg = 2 [default = "&#92;350&#92;257&#92;267&#92;346&#92;261&#92;202&#92;346&#92;210&#92;220&#92;345&#92;212&#92;237"];</code>
+       *
+       * <pre>
+       * RPC response code msg
+       * </pre>
+       */
+      public Builder setMsgBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional string data = 3;
+      private java.lang.Object data_ = "";
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public boolean hasData() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public java.lang.String getData() {
+        java.lang.Object ref = data_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          data_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDataBytes() {
+        java.lang.Object ref = data_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          data_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public Builder setData(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        data_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public Builder clearData() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        data_ = getDefaultInstance().getData();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string data = 3;</code>
+       */
+      public Builder setDataBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        data_ = value;
+        onChanged();
+        return this;
+      }
 
       // @@protoc_insertion_point(builder_scope:Response)
     }
@@ -2433,32 +2911,6 @@ public final class Message {
     }
 
     // @@protoc_insertion_point(class_scope:Response)
-    public static final int CODE_FIELD_NUMBER = 100;
-    /**
-     * <code>extend .Msg { ... }</code>
-     */
-    public static final
-      com.google.protobuf.GeneratedMessage.GeneratedExtension<
-        cn.slimsmart.protoc.demo.rpc.Message.Msg,
-        java.lang.Integer> code = com.google.protobuf.GeneratedMessage
-            .newMessageScopedGeneratedExtension(
-          cn.slimsmart.protoc.demo.rpc.Message.Response.getDefaultInstance(),
-          0,
-          java.lang.Integer.class,
-          null);
-    public static final int MSG_FIELD_NUMBER = 101;
-    /**
-     * <code>extend .Msg { ... }</code>
-     */
-    public static final
-      com.google.protobuf.GeneratedMessage.GeneratedExtension<
-        cn.slimsmart.protoc.demo.rpc.Message.Msg,
-        java.lang.String> msg = com.google.protobuf.GeneratedMessage
-            .newMessageScopedGeneratedExtension(
-          cn.slimsmart.protoc.demo.rpc.Message.Response.getDefaultInstance(),
-          1,
-          java.lang.String.class,
-          null);
   }
 
   /**
@@ -2697,6 +3149,238 @@ public final class Message {
     // @@protoc_insertion_point(class_scope:RpcService)
   }
 
+  /**
+   * Protobuf service {@code ReplyService}
+   */
+  public static abstract class ReplyService
+      implements com.google.protobuf.Service {
+    protected ReplyService() {}
+
+    public interface Interface {
+      /**
+       * <code>rpc call(.Msg) returns (.Msg);</code>
+       */
+      public abstract void call(
+          com.google.protobuf.RpcController controller,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg request,
+          com.google.protobuf.RpcCallback<cn.slimsmart.protoc.demo.rpc.Message.Msg> done);
+
+    }
+
+    public static com.google.protobuf.Service newReflectiveService(
+        final Interface impl) {
+      return new ReplyService() {
+        @java.lang.Override
+        public  void call(
+            com.google.protobuf.RpcController controller,
+            cn.slimsmart.protoc.demo.rpc.Message.Msg request,
+            com.google.protobuf.RpcCallback<cn.slimsmart.protoc.demo.rpc.Message.Msg> done) {
+          impl.call(controller, request, done);
+        }
+
+      };
+    }
+
+    public static com.google.protobuf.BlockingService
+        newReflectiveBlockingService(final BlockingInterface impl) {
+      return new com.google.protobuf.BlockingService() {
+        public final com.google.protobuf.Descriptors.ServiceDescriptor
+            getDescriptorForType() {
+          return getDescriptor();
+        }
+
+        public final com.google.protobuf.Message callBlockingMethod(
+            com.google.protobuf.Descriptors.MethodDescriptor method,
+            com.google.protobuf.RpcController controller,
+            com.google.protobuf.Message request)
+            throws com.google.protobuf.ServiceException {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.callBlockingMethod() given method descriptor for " +
+              "wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return impl.call(controller, (cn.slimsmart.protoc.demo.rpc.Message.Msg)request);
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getRequestPrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getRequestPrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+        public final com.google.protobuf.Message
+            getResponsePrototype(
+            com.google.protobuf.Descriptors.MethodDescriptor method) {
+          if (method.getService() != getDescriptor()) {
+            throw new java.lang.IllegalArgumentException(
+              "Service.getResponsePrototype() given method " +
+              "descriptor for wrong service type.");
+          }
+          switch(method.getIndex()) {
+            case 0:
+              return cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance();
+            default:
+              throw new java.lang.AssertionError("Can't get here.");
+          }
+        }
+
+      };
+    }
+
+    /**
+     * <code>rpc call(.Msg) returns (.Msg);</code>
+     */
+    public abstract void call(
+        com.google.protobuf.RpcController controller,
+        cn.slimsmart.protoc.demo.rpc.Message.Msg request,
+        com.google.protobuf.RpcCallback<cn.slimsmart.protoc.demo.rpc.Message.Msg> done);
+
+    public static final
+        com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptor() {
+      return cn.slimsmart.protoc.demo.rpc.Message.getDescriptor().getServices().get(1);
+    }
+    public final com.google.protobuf.Descriptors.ServiceDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public final void callMethod(
+        com.google.protobuf.Descriptors.MethodDescriptor method,
+        com.google.protobuf.RpcController controller,
+        com.google.protobuf.Message request,
+        com.google.protobuf.RpcCallback<
+          com.google.protobuf.Message> done) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.callMethod() given method descriptor for wrong " +
+          "service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          this.call(controller, (cn.slimsmart.protoc.demo.rpc.Message.Msg)request,
+            com.google.protobuf.RpcUtil.<cn.slimsmart.protoc.demo.rpc.Message.Msg>specializeCallback(
+              done));
+          return;
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getRequestPrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getRequestPrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public final com.google.protobuf.Message
+        getResponsePrototype(
+        com.google.protobuf.Descriptors.MethodDescriptor method) {
+      if (method.getService() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "Service.getResponsePrototype() given method " +
+          "descriptor for wrong service type.");
+      }
+      switch(method.getIndex()) {
+        case 0:
+          return cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance();
+        default:
+          throw new java.lang.AssertionError("Can't get here.");
+      }
+    }
+
+    public static Stub newStub(
+        com.google.protobuf.RpcChannel channel) {
+      return new Stub(channel);
+    }
+
+    public static final class Stub extends cn.slimsmart.protoc.demo.rpc.Message.ReplyService implements Interface {
+      private Stub(com.google.protobuf.RpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.RpcChannel channel;
+
+      public com.google.protobuf.RpcChannel getChannel() {
+        return channel;
+      }
+
+      public  void call(
+          com.google.protobuf.RpcController controller,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg request,
+          com.google.protobuf.RpcCallback<cn.slimsmart.protoc.demo.rpc.Message.Msg> done) {
+        channel.callMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance(),
+          com.google.protobuf.RpcUtil.generalizeCallback(
+            done,
+            cn.slimsmart.protoc.demo.rpc.Message.Msg.class,
+            cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance()));
+      }
+    }
+
+    public static BlockingInterface newBlockingStub(
+        com.google.protobuf.BlockingRpcChannel channel) {
+      return new BlockingStub(channel);
+    }
+
+    public interface BlockingInterface {
+      public cn.slimsmart.protoc.demo.rpc.Message.Msg call(
+          com.google.protobuf.RpcController controller,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg request)
+          throws com.google.protobuf.ServiceException;
+    }
+
+    private static final class BlockingStub implements BlockingInterface {
+      private BlockingStub(com.google.protobuf.BlockingRpcChannel channel) {
+        this.channel = channel;
+      }
+
+      private final com.google.protobuf.BlockingRpcChannel channel;
+
+      public cn.slimsmart.protoc.demo.rpc.Message.Msg call(
+          com.google.protobuf.RpcController controller,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg request)
+          throws com.google.protobuf.ServiceException {
+        return (cn.slimsmart.protoc.demo.rpc.Message.Msg) channel.callBlockingMethod(
+          getDescriptor().getMethods().get(0),
+          controller,
+          request,
+          cn.slimsmart.protoc.demo.rpc.Message.Msg.getDefaultInstance());
+      }
+
+    }
+
+    // @@protoc_insertion_point(class_scope:ReplyService)
+  }
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Request_descriptor;
   private static
@@ -2729,12 +3413,13 @@ public final class Message {
       "\n src/main/resources/message.proto\"K\n\007Re" +
       "quest\022\023\n\013serviceName\030\001 \002(\t\022\022\n\nmethodName" +
       "\030\002 \001(\t\022\027\n\006params\030\003 \001(\0132\007.Params\"$\n\006Param" +
-      "s\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"\035\n\003Msg\022\017\n\007" +
-      "content\030\001 \001(\t*\005\010d\020\350\007\"B\n\010Response2\025\n\004code" +
-      "\022\004.Msg\030d \002(\005:\00102\037\n\003msg\022\004.Msg\030e \002(\t:\014\350\257\267\346" +
-      "\261\202\346\210\220\345\212\2372)\n\nRpcService\022\033\n\004call\022\010.Request" +
-      "\032\t.ResponseB*\n\034cn.slimsmart.protoc.demo." +
-      "rpcB\007Message\210\001\001"
+      "s\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \001(\t\"\026\n\003Msg\022\017\n\007" +
+      "content\030\001 \001(\t\"D\n\010Response\022\017\n\004code\030\001 \002(\005:" +
+      "\0010\022\031\n\003msg\030\002 \002(\t:\014\350\257\267\346\261\202\346\210\220\345\212\237\022\014\n\004data\030\003 " +
+      "\001(\t2)\n\nRpcService\022\033\n\004call\022\010.Request\032\t.Re" +
+      "sponse2\"\n\014ReplyService\022\022\n\004call\022\004.Msg\032\004.M" +
+      "sgB*\n\034cn.slimsmart.protoc.demo.rpcB\007Mess" +
+      "age\210\001\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2764,7 +3449,7 @@ public final class Message {
           internal_static_Response_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Response_descriptor,
-              new java.lang.String[] { });
+              new java.lang.String[] { "Code", "Msg", "Data", });
           return null;
         }
       };
