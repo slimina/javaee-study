@@ -17,8 +17,8 @@ import cn.slimsmart.protoc.demo.rpc.Message.ReplyService;
 import cn.slimsmart.protoc.demo.rpc.Message.Request;
 import cn.slimsmart.protoc.demo.rpc.Message.RpcService;
 
+import com.google.protobuf.BlockingService;
 import com.google.protobuf.ExtensionRegistry;
-import com.google.protobuf.Service;
 import com.googlecode.protobuf.pro.duplex.CleanShutdownHandler;
 import com.googlecode.protobuf.pro.duplex.ClientRpcController;
 import com.googlecode.protobuf.pro.duplex.PeerInfo;
@@ -91,9 +91,9 @@ public class BlockClient {
 		};
 		rpcEventNotifier.addEventListener(listener);
 		clientFactory.registerConnectionEventListener(rpcEventNotifier);
-		//注册服务 reply非阻塞服务
-		Service nonBlockingReplyService = ReplyService.newReflectiveService(new NonBlockReplyService());
-		clientFactory.getRpcServiceRegistry().registerService(nonBlockingReplyService);		
+		//注册服务 reply阻塞服务，用于反馈
+		BlockingService blockingReplyService = ReplyService.newReflectiveBlockingService(new BlockReplyService());
+		clientFactory.getRpcServiceRegistry().registerService(blockingReplyService);	
 
 		Bootstrap bootstrap = new Bootstrap();
 		EventLoopGroup workers = new NioEventLoopGroup(16, new RenamingThreadFactoryProxy("workers", Executors.defaultThreadFactory()));
@@ -123,6 +123,7 @@ public class BlockClient {
 
 			Params params = Params.newBuilder().setKey("name").setValue("jack").build();
 			Request request = Request.newBuilder().setServiceName("UserService").setMethodName("insert").setParams(params).build();
+			//阻塞调用
 			blockingService.call(controller, request);
 			Thread.sleep(100000);
 		}
