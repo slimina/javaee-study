@@ -116,6 +116,7 @@ public class SpringClient {
 			final ClientRpcController controller = channel.newRpcController();
 			controller.setTimeoutMs(0);
 			Msg msg = Msg.newBuilder().setContent("client message.....").build();
+			//异步发送  服务器反馈RpcCallback
 			nonReplyService.call(controller, msg, new RpcCallback<Message.Msg>() {
 				@Override
 				public void run(Message.Msg msg) {
