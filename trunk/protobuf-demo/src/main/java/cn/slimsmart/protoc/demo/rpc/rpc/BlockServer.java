@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import cn.slimsmart.protoc.demo.rpc.Message;
 import cn.slimsmart.protoc.demo.rpc.Message.RpcService;
 
+import com.google.protobuf.BlockingService;
 import com.google.protobuf.ExtensionRegistry;
-import com.google.protobuf.Service;
 import com.googlecode.protobuf.pro.duplex.CleanShutdownHandler;
 import com.googlecode.protobuf.pro.duplex.PeerInfo;
 import com.googlecode.protobuf.pro.duplex.RpcClientChannel;
@@ -77,10 +77,11 @@ public class BlockServer {
 		};
 		rpcEventNotifier.setEventListener(listener);
 		serverFactory.registerConnectionEventListener(rpcEventNotifier);
-		//注册服务非 阻塞RPC服务
-	    Service nbService = RpcService.newReflectiveService(new NonBlockRpcService());
-        serverFactory.getRpcServiceRegistry().registerService(true, nbService);
-	    
+		
+       //注册服务 阻塞RPC服务
+  		BlockingService blockingService = RpcService.newReflectiveBlockingService(new BlockRpcService());
+  	    serverFactory.getRpcServiceRegistry().registerService(true, blockingService);
+      	    
 	    ServerBootstrap bootstrap = new ServerBootstrap();
         EventLoopGroup boss = new NioEventLoopGroup(2,new RenamingThreadFactoryProxy("boss", Executors.defaultThreadFactory()));
         EventLoopGroup workers = new NioEventLoopGroup(2,new RenamingThreadFactoryProxy("worker", Executors.defaultThreadFactory()));

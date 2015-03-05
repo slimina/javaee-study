@@ -26,6 +26,7 @@ message Response {
 	required string msg =2 [default = "请求成功"];
 	optional string data = 3;
 }
+//如下是service接口定义
 //interface
 service RpcService {
     rpc call(Request) returns (Response);

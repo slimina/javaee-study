@@ -18,9 +18,9 @@ import cn.slimsmart.protoc.demo.rpc.Message.Request;
 import cn.slimsmart.protoc.demo.rpc.Message.Response;
 import cn.slimsmart.protoc.demo.rpc.Message.RpcService;
 
-import com.google.protobuf.BlockingService;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.RpcCallback;
+import com.google.protobuf.Service;
 import com.googlecode.protobuf.pro.duplex.CleanShutdownHandler;
 import com.googlecode.protobuf.pro.duplex.ClientRpcController;
 import com.googlecode.protobuf.pro.duplex.PeerInfo;
@@ -93,10 +93,10 @@ public class NonBlockClient {
 		};
 		rpcEventNotifier.addEventListener(listener);
 		clientFactory.registerConnectionEventListener(rpcEventNotifier);
-		//注册服务 reply阻塞服务
-		BlockingService blockingReplyService = ReplyService.newReflectiveBlockingService(new BlockReplyService());
-		clientFactory.getRpcServiceRegistry().registerService(blockingReplyService);		
-
+		//注册服务 reply非阻塞服务
+		Service nonBlockingReplyService = ReplyService.newReflectiveService(new NonBlockReplyService());
+		clientFactory.getRpcServiceRegistry().registerService(nonBlockingReplyService);
+		
 		Bootstrap bootstrap = new Bootstrap();
 		EventLoopGroup workers = new NioEventLoopGroup(16, new RenamingThreadFactoryProxy("workers", Executors.defaultThreadFactory()));
 
@@ -125,6 +125,7 @@ public class NonBlockClient {
 
 			Params params = Params.newBuilder().setKey("name").setValue("jack").build();
 			Request request = Request.newBuilder().setServiceName("UserService").setMethodName("insert").setParams(params).build();
+			//非阻塞调用、异步回调
 			nonService.call(controller, request, new RpcCallback<Message.Response>() {
 				@Override
 				public void run(Response response) {

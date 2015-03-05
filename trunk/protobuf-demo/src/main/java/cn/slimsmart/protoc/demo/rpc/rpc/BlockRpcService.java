@@ -36,7 +36,7 @@ public  class BlockRpcService implements RpcService.BlockingInterface{
 		ReplyService.BlockingInterface clientService = ReplyService.newBlockingStub(channel);
 		ClientRpcController clientController = channel.newRpcController();
 		clientController.setTimeoutMs(3000);
-		
+		//调用过程反馈消息
 		Msg msg = Msg.newBuilder().setContent("success.").build();
 		clientService.call(clientController, msg);
 		Response response = Response.newBuilder().setCode(0).setMsg("处理完成").setData("server hello").build();
