@@ -54,7 +54,7 @@ public class SpringServer {
 		serverFactory.setRpcServerCallExecutor(rpcExecutor);
 		log.info("Proto Serverbootstrap created");
 
-		// Register replyService
+		// 注册非阻塞服务
 		Service replyService = ReplyService.newReflectiveService(nonBlockReplyService);
 		serverFactory.getRpcServiceRegistry().registerService(true, replyService);
 
