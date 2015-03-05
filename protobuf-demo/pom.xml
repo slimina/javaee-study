@@ -10,6 +10,7 @@
 			<artifactId>protobuf-java</artifactId>
 			<version>2.6.1</version>
 		</dependency>
+		<!-- 使用jdk1.7编译，需要使用jdk1.7，或者使用源码重新编译  -->
 		<dependency>
 			<groupId>com.googlecode.protobuf-rpc-pro</groupId>
 			<artifactId>protobuf-rpc-pro-duplex</artifactId>
