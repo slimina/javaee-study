@@ -14,11 +14,13 @@ public class Test {
 		UserRepository userRepository = context.getBean(UserRepository.class);
 		userRepository.test();
 		userRepository.createCollection();
-		User user = new User();
-		user.setId(UUID.randomUUID().toString());
-		user.setName("jack");
-		user.setBirthday(new Date());
-		userRepository.insert(user);
+		for(int i = 0 ; i< 10000;i++){
+			User user = new User();
+			user.setId(UUID.randomUUID().toString());
+			user.setName("jack"+i);
+			user.setBirthday(new Date());
+			userRepository.insert(user);
+		}
 		System.out.println(userRepository.findListByName("jack"));;
 	}
 }

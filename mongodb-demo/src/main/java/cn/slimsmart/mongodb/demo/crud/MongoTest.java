@@ -1,7 +1,9 @@
 package cn.slimsmart.mongodb.demo.crud;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import com.mongodb.BasicDBObject;
@@ -10,6 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
 
@@ -18,8 +21,13 @@ public class MongoTest {
 	private static MongoClient mongoClient;
 
 	public static void main(String[] args) throws UnknownHostException {
+		
+		List<ServerAddress> list = new ArrayList<ServerAddress>();
+		list.add(new ServerAddress("192.168.100.90", 30000));
+		list.add(new ServerAddress("192.168.100.110", 30000));
+		list.add(new ServerAddress("192.168.110.71", 30000));
 		// 初始化mongoClient
-		mongoClient = new MongoClient("192.168.36.61", 23000);
+		mongoClient = new MongoClient(list);
 		// 1.数据库列表
 		for (String s : mongoClient.getDatabaseNames()) {
 			System.out.println("DatabaseName=" + s);
@@ -53,7 +61,7 @@ public class MongoTest {
 
 	// 新增数据
 	public static void save(DBCollection coll) {
-		BasicDBObject doc = new BasicDBObject("_id", "6").append("name", new BasicDBObject("username", "zhangshan").append("nickname", "张珊"))
+		BasicDBObject doc = new BasicDBObject("_id", "8").append("name", new BasicDBObject("username", "zhangshan").append("nickname", "张珊"))
 				.append("password", "123456").append("password", "123456").append("regionName", "北京").append("works", "5").append("birth", new Date());
 		WriteResult result = coll.insert(doc);
 		System.out.println("insert-result: " + result);

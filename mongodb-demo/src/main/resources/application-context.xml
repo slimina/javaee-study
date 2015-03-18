@@ -13,7 +13,7 @@
 	<context:component-scan base-package="cn.slimsmart.mongodb.demo.spring" />
 	<context:property-placeholder location="classpath*:mongodb.properties" />
 	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口多个以逗号分隔 -->  
-	<mongo:mongo id="mongo" host="${monngo.host}" port="${monngo.port}">
+	<mongo:mongo id="mongo" replica-set="192.168.100.90:30000,192.168.100.110:30000,192.168.110.71:30000">
 		<!-- 一些连接属性的设置 -->  
 		<mongo:options connections-per-host="8"
 			threads-allowed-to-block-for-connection-multiplier="4"
