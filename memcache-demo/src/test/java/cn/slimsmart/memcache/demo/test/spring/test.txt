@@ -15,82 +15,76 @@ XMemcached特性：
 
 2.对于与spring官方给出配置说明：http://code.google.com/p/xmemcached/wiki/Spring_Integration 
 下面简单整理配置如下： 
-<?xml version="1.0" encoding="UTF-8"?> 
-<beans xmlns="http://www.springframework.org/schema/beans" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" 
-xmlns:p="http://www.springframework.org/schema/p" 
-xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> 
-<!-- Simple Config: 
-<bean name="memcachedClient" 
-class="net.rubyeye.xmemcached.utils.XMemcachedClientFactoryBean" 
-destroy-method="shutdown"> 
-<property name="servers"> 
-<value>host1:port1 host2:port2</value> 
-</property> 
-</bean> 
---> 
-<bean id="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder" 
-p:connectionPoolSize="${memcached.connectionPoolSize}" p:failureMode="${memcached.failureMode}"> 
-<!-- XMemcachedClientBuilder have two arguments.First is server list,and 
-second is weights array. --> 
-<constructor-arg> 
-<list> 
-<bean class="java.net.InetSocketAddress"> 
-<constructor-arg> 
-<value>${memcached.server1.host}</value> 
-</constructor-arg> 
-<constructor-arg> 
-<value>${memcached.server1.port}</value> 
-</constructor-arg> 
-</bean> 
-<bean class="java.net.InetSocketAddress"> 
-<constructor-arg> 
-<value>${memcached.server2.host}</value> 
-</constructor-arg> 
-<constructor-arg> 
-<value>${memcached.server2.port}</value> 
-</constructor-arg> 
-</bean> 
-<bean class="java.net.InetSocketAddress"> 
-<constructor-arg> 
-<value>${memcached.server3.host}</value> 
-</constructor-arg> 
-<constructor-arg> 
-<value>${memcached.server3.port}</value> 
-</constructor-arg> 
-</bean> 
-<bean class="java.net.InetSocketAddress"> 
-<constructor-arg> 
-<value>${memcached.server4.host}</value> 
-</constructor-arg> 
-<constructor-arg> 
-<value>${memcached.server4.port}</value> 
-</constructor-arg> 
-</bean> 
-</list> 
-</constructor-arg> 
-<constructor-arg> 
-<list> 
-<value>${memcached.server1.weight}</value> 
-<value>${memcached.server2.weight}</value> 
-<value>${memcached.server3.weight}</value> 
-<value>${memcached.server4.weight}</value> 
-</list> 
-</constructor-arg> 
-<property name="commandFactory"> 
-<bean class="net.rubyeye.xmemcached.command.TextCommandFactory" /> 
-</property> 
-<property name="sessionLocator"> 
-<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator" /> 
-</property> 
-<property name="transcoder"> 
-<bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" /> 
-</property> 
-</bean> 
-<!-- Use factory bean to build memcached client --> 
-<bean id="memcachedClient" factory-bean="memcachedClientBuilder" 
-factory-method="build" destroy-method="shutdown" /> 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- Simple Config: <bean name="memcachedClient" class="net.rubyeye.xmemcached.utils.XMemcachedClientFactoryBean" 
+		destroy-method="shutdown"> <property name="servers"> <value>host1:port1 host2:port2</value> 
+		</property> </bean> -->
+	<bean id="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder"
+		p:connectionPoolSize="${memcached.connectionPoolSize}" p:failureMode="${memcached.failureMode}">
+		<!-- XMemcachedClientBuilder have two arguments.First is server list,and 
+			second is weights array. -->
+		<constructor-arg>
+			<list>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg>
+						<value>${memcached.server1.host}</value>
+					</constructor-arg>
+					<constructor-arg>
+						<value>${memcached.server1.port}</value>
+					</constructor-arg>
+				</bean>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg>
+						<value>${memcached.server2.host}</value>
+					</constructor-arg>
+					<constructor-arg>
+						<value>${memcached.server2.port}</value>
+					</constructor-arg>
+				</bean>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg>
+						<value>${memcached.server3.host}</value>
+					</constructor-arg>
+					<constructor-arg>
+						<value>${memcached.server3.port}</value>
+					</constructor-arg>
+				</bean>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg>
+						<value>${memcached.server4.host}</value>
+					</constructor-arg>
+					<constructor-arg>
+						<value>${memcached.server4.port}</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<value>${memcached.server1.weight}</value>
+				<value>${memcached.server2.weight}</value>
+				<value>${memcached.server3.weight}</value>
+				<value>${memcached.server4.weight}</value>
+			</list>
+		</constructor-arg>
+		<property name="commandFactory">
+			<bean class="net.rubyeye.xmemcached.command.TextCommandFactory" />
+		</property>
+		<property name="sessionLocator">
+			<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator" />
+		</property>
+		<property name="transcoder">
+			<bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" />
+		</property>
+	</bean>
+	<!-- Use factory bean to build memcached client -->
+	<bean id="memcachedClient" factory-bean="memcachedClientBuilder"
+		factory-method="build" destroy-method="shutdown" />
 </beans> 
 3.使用SSM开源项目注解来对Memcached缓存实现 
 simple-spring-memcached本质上是采用了AOP的方式来实现缓存的调用和管理，其核心组件声明了一些Advice，当遇到相应的切入点时，会执行这些Advice来对memcached加以管理。
@@ -115,6 +109,8 @@ spring继承对于spymemcached、xmemcached和aws-elasticache都有实现如：s
 参考文章： 
 基于自定义注解和aop 实现使用memcache 对数据库的缓存示例 
 http://www.tuicool.com/articles/emqQjui 
+spring mybatis memcached集成
+https://github.com/batizhao/spring-mybatis-memcached
 
 
 
