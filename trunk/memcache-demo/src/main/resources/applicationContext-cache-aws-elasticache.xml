@@ -10,6 +10,8 @@
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 	default-lazy-init="false">
 
+	<context:component-scan base-package="cn.slimsmart.memcache.demo.test.spring" />
+
 	<import resource="simplesm-context.xml" />
 
 	<aop:aspectj-autoproxy />
@@ -22,7 +24,7 @@
 		<property name="addressProvider">
 			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
 				<property name="address"
-					value="192.168.100.110:11211,192.168.100.110:11311,192.168.100.110:11411" />
+					value="127.0.0.1:11211" />
 			</bean>
 		</property>
 		<property name="configuration">
@@ -31,10 +33,13 @@
 				<property name="consistentHashing" value="true" />
 				<!-- in this use static configuration and do not try to fetch configuration 
 					of nodes from cluster (auto discovery node feature is disabled) -->
-				<property name="clientMode" value="#{T(net.spy.memcached.ClientMode).Static}" />
+<!-- 				<property name="clientMode" value="#{T(net.spy.memcached.ClientMode).Dynamic}" />  -->
 				<property name="useBinaryProtocol" value="true" />
 			</bean>
 		</property>
-<!-- 		<property name="cacheName" value="default" /> -->
+		<property name="cacheName" value="default" />
+	</bean>
+	<bean class="com.google.code.ssm.Settings" >
+		<property name="order" value="500" />
 	</bean>
 </beans>

@@ -9,6 +9,8 @@
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd"
 	default-lazy-init="false">
+	
+	<context:component-scan base-package="cn.slimsmart.memcache.demo.test.spring" />
 
 	<import resource="simplesm-context.xml" />
 
@@ -22,7 +24,7 @@
 		<property name="addressProvider">
 			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
 				<property name="address"
-					value="192.168.100.110:11211,192.168.100.110:11311,192.168.100.110:11411" />
+					value="127.0.0.1:11211" />
 			</bean>
 		</property>
 		<property name="configuration">
@@ -30,6 +32,10 @@
 				<property name="consistentHashing" value="true" />
 			</bean>
 		</property>
-<!-- 		<property name="cacheName" value=default /> -->
+		<property name="cacheName" value="default" />
+	</bean>
+	<!-- 至3.2.0缓存建议顺序，默认值为0 ，在事务之前缓存运行，org.springframework.core.ordered getorder() -->
+	<bean class="com.google.code.ssm.Settings" >
+		<property name="order" value="500" />
 	</bean>
 </beans>

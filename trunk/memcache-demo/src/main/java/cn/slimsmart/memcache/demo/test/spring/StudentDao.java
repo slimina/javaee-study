@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.google.code.ssm.api.InvalidateSingleCache;
+import com.google.code.ssm.api.ParameterDataUpdateContent;
 import com.google.code.ssm.api.ParameterValueKeyProvider;
 import com.google.code.ssm.api.ReadThroughMultiCache;
 import com.google.code.ssm.api.ReadThroughMultiCacheOption;
@@ -70,7 +71,7 @@ public class StudentDao {
 	 * 注：上述两个注解，必须与Update*系列的注解一起使用
 	 */
 	@UpdateSingleCache(namespace=NAMESPACE,expiration=3600)
-	public void updateStudent(@ParameterValueKeyProvider Student student){
+	public void updateStudent(@ParameterValueKeyProvider @ParameterDataUpdateContent Student student){
 		//TODO: update db data;
 	}
 	

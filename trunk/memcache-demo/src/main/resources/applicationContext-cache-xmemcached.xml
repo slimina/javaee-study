@@ -27,7 +27,7 @@
 			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
 				<!-- address属性定义了缓存节点的IP地址和端口号 memcached 服务器地址，可配置多个，用“，”号隔开 -->
 				<property name="address"
-					value="192.168.100.110:11211,192.168.100.110:11311,192.168.100.110:11411" />
+					value="127.0.0.1:11211" />
 			</bean>
 		</property>
 		<property name="configuration">
@@ -37,6 +37,10 @@
 			</bean>
 		</property>
 		<!-- 该Memcached配置的Cache名称 一个应用中存在多个Memcached时，各个配置的cacheName必须不同。如果该值未设，系统默认为default -->
-<!-- 		<property name="cacheName" value=default /> -->
+		<property name="cacheName" value="default" />
+	</bean>
+	<!-- 至3.2.0缓存建议顺序，默认值为0 ，在事务之前缓存运行，org.springframework.core.ordered getorder() -->
+	<bean class="com.google.code.ssm.Settings" >
+		<property name="order" value="500" />
 	</bean>
 </beans>
