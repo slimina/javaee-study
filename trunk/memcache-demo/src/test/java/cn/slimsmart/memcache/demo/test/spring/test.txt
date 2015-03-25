@@ -1,0 +1,120 @@
+XMemcached 是一个新 java memcached client。下面我们以XMemcached为例，演示一下其使用。 
+XMemcached特性： 
+1.高性能 
+2.支持完整的memcached文本协议,二进制协议。 
+3.支持JMX，可以通过MBean调整性能参数、动态添加/移除server、查看统计等。 
+4.支持客户端统计 
+5.支持memcached节点的动态增减。 
+6.支持memcached分布:余数分布和一致性哈希分布。 
+7.更多的性能调整选项。 
+此外，XMemcached更容易与Spring集成。 
+项目地址：https://code.google.com/p/xmemcached/ 
+关于的使用，请参考用户手册：https://code.google.com/p/xmemcached/wiki/User_Guide_zh
+
+1.关于XMemcached的client使用请参考工程代码： 
+
+2.对于与spring官方给出配置说明：http://code.google.com/p/xmemcached/wiki/Spring_Integration 
+下面简单整理配置如下： 
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:p="http://www.springframework.org/schema/p" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> 
+<!-- Simple Config: 
+<bean name="memcachedClient" 
+class="net.rubyeye.xmemcached.utils.XMemcachedClientFactoryBean" 
+destroy-method="shutdown"> 
+<property name="servers"> 
+<value>host1:port1 host2:port2</value> 
+</property> 
+</bean> 
+--> 
+<bean id="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder" 
+p:connectionPoolSize="${memcached.connectionPoolSize}" p:failureMode="${memcached.failureMode}"> 
+<!-- XMemcachedClientBuilder have two arguments.First is server list,and 
+second is weights array. --> 
+<constructor-arg> 
+<list> 
+<bean class="java.net.InetSocketAddress"> 
+<constructor-arg> 
+<value>${memcached.server1.host}</value> 
+</constructor-arg> 
+<constructor-arg> 
+<value>${memcached.server1.port}</value> 
+</constructor-arg> 
+</bean> 
+<bean class="java.net.InetSocketAddress"> 
+<constructor-arg> 
+<value>${memcached.server2.host}</value> 
+</constructor-arg> 
+<constructor-arg> 
+<value>${memcached.server2.port}</value> 
+</constructor-arg> 
+</bean> 
+<bean class="java.net.InetSocketAddress"> 
+<constructor-arg> 
+<value>${memcached.server3.host}</value> 
+</constructor-arg> 
+<constructor-arg> 
+<value>${memcached.server3.port}</value> 
+</constructor-arg> 
+</bean> 
+<bean class="java.net.InetSocketAddress"> 
+<constructor-arg> 
+<value>${memcached.server4.host}</value> 
+</constructor-arg> 
+<constructor-arg> 
+<value>${memcached.server4.port}</value> 
+</constructor-arg> 
+</bean> 
+</list> 
+</constructor-arg> 
+<constructor-arg> 
+<list> 
+<value>${memcached.server1.weight}</value> 
+<value>${memcached.server2.weight}</value> 
+<value>${memcached.server3.weight}</value> 
+<value>${memcached.server4.weight}</value> 
+</list> 
+</constructor-arg> 
+<property name="commandFactory"> 
+<bean class="net.rubyeye.xmemcached.command.TextCommandFactory" /> 
+</property> 
+<property name="sessionLocator"> 
+<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator" /> 
+</property> 
+<property name="transcoder"> 
+<bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" /> 
+</property> 
+</bean> 
+<!-- Use factory bean to build memcached client --> 
+<bean id="memcachedClient" factory-bean="memcachedClientBuilder" 
+factory-method="build" destroy-method="shutdown" /> 
+</beans> 
+3.使用SSM开源项目注解来对Memcached缓存实现 
+simple-spring-memcached本质上是采用了AOP的方式来实现缓存的调用和管理，其核心组件声明了一些Advice，当遇到相应的切入点时，会执行这些Advice来对memcached加以管理。
+切入点是通过标签的方式来进行声明的，在项目开发时，通常在DAO的方法上加以相应的标签描述，来表示组件对该方法的拦截
+组件所提供的切入点主要包括以下几种：
+ReadThroughSingleCache、ReadThroughMultiCache、ReadThroughAssignCache
+当遇到查询方法声明这些切入点时，组件首先会从缓存中读取数据，取到数据则跳过查询方法，直接返回。
+取不到数据在执行查询方法，并将查询结果放入缓存，以便下一次获取。
+InvalidateSingleCache、InvalidateMultiCache、InvalidateAssignCache
+当遇到删除方法声明这些切入点时，组件会删除缓存中的对应实体
+UpdateSingleCache、UpdateMultiCache、UpdateAssignCache
+当遇到更新方法声明这些切入点是，组件会更新缓存中对应的实体，以便下次从缓存中读取出的数据状态是最新的
+simple-spring-memcached本身并不提供cache机制的实现，只是为了cache的调用更加简单而设计的。在cache的实现上使用的是第三方组件(如x-memcached和spy-memcached)，官方给出了针对这两种组件的相关配置。
+
+项目地址：https://github.com/ragnor/simple-spring-memcached 
+maven仓库：http://mvnrepository.com/artifact/com.google.code.simple-spring-memcached 
+spring继承对于spymemcached、xmemcached和aws-elasticache都有实现如：spymemcached-provider、xmemcached-provider、aws-elasticache-provider 
+使用文档：https://code.google.com/p/simple-spring-memcached/wiki/Getting_Started 
+
+详情请参考代码示例： 
+
+参考文章： 
+基于自定义注解和aop 实现使用memcache 对数据库的缓存示例 
+http://www.tuicool.com/articles/emqQjui 
+
+
+

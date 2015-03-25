@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<context:component-scan base-package="cn.slimsmart.memcache.demo.test.spring" />
+
+	<!-- simplesm-context.xml封装在simple-spring-memcached-*.jar文件当中，主要用来加载组件核心的Advice，供程序调度使用。 -->
+	<import resource="simplesm-context.xml" />
+	<!-- simple-spring-memcached主要是基于AOP的代理，所以加入<aop:aspectj-autoproxy />让代理机制起到作用。 -->
+	<aop:aspectj-autoproxy />
+
+	<!-- CacheFactory是一个FactoryBean，会返回Cache实体供Advice使用 -->
+	<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory">
+
+		<property name="cacheClientFactory">
+			<bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
+		</property>
+		<property name="addressProvider">
+			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
+				<!-- address属性定义了缓存节点的IP地址和端口号 memcached 服务器地址，可配置多个，用“，”号隔开 -->
+				<property name="address"
+					value="192.168.100.110:11211,192.168.100.110:11311,192.168.100.110:11411" />
+			</bean>
+		</property>
+		<property name="configuration">
+			<bean class="com.google.code.ssm.providers.CacheConfiguration">
+				<!--consistentHashing属性定义了缓存节点的查找方法: 是否使用哈希 -->
+				<property name="consistentHashing" value="true" />
+			</bean>
+		</property>
+		<!-- 该Memcached配置的Cache名称 一个应用中存在多个Memcached时，各个配置的cacheName必须不同。如果该值未设，系统默认为default -->
+		<property name="cacheName" value="default" />
+	</bean>
+</beans>
