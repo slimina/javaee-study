@@ -31,6 +31,6 @@
 				<property name="useBinaryProtocol" value="true" />
 			</bean>
 		</property>
-		<property name="cacheName" value="default" />
+<!-- 		<property name="cacheName" value="default" /> -->
 	</bean>
 </beans>

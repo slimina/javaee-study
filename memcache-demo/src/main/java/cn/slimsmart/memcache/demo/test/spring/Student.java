@@ -4,8 +4,10 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.code.ssm.api.CacheKeyMethod;
 
 /**
@@ -13,7 +15,8 @@ import com.google.code.ssm.api.CacheKeyMethod;
  * 可通过@CacheKeyMethod标签来为实体指定Key值，同时实体及实体的每个成员变量必须是可序列化的，
  * 可实现Serializable接口，或通过Externalizable接口来为实体指定序列化方法。
  */
-public class Student implements Externalizable {
+@JsonIgnoreProperties
+public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final int CLASS_VERSION = 1;
@@ -57,11 +60,11 @@ public class Student implements Externalizable {
 		this.birthday = birthday;
 	}
 
-	@Override
+	/*@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.write(CLASS_VERSION);
-		out.writeUTF(id);
-		out.writeUTF(name);
+		out.writeChars(id);
+		out.writeChars(name);
 		out.writeInt(age);
 		out.writeObject(birthday);
 	}
@@ -69,11 +72,11 @@ public class Student implements Externalizable {
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		in.readInt(); // reads CLASS_VERSION
-		id=in.readUTF();
-		name=in.readUTF();
+		id=in.readLine();
+		name=in.readLine();
 		age=in.readInt();
 		birthday=(Date)in.readObject();
-	}
+	}*/
 
 	@Override
 	public boolean equals(Object obj) {

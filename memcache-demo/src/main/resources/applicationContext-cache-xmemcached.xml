@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+					    http://www.springframework.org/schema/aop
+	                    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="false">
 
 	<context:component-scan base-package="cn.slimsmart.memcache.demo.test.spring" />
 
@@ -34,6 +37,6 @@
 			</bean>
 		</property>
 		<!-- 该Memcached配置的Cache名称 一个应用中存在多个Memcached时，各个配置的cacheName必须不同。如果该值未设，系统默认为default -->
-		<property name="cacheName" value="default" />
+<!-- 		<property name="cacheName" value=default /> -->
 	</bean>
 </beans>
