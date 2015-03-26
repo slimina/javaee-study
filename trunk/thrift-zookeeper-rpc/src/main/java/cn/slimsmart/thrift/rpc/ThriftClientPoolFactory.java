@@ -10,6 +10,8 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.slimsmart.thrift.rpc.zookeeper.ThriftServerAddressProvider;
 
@@ -18,6 +20,8 @@ import cn.slimsmart.thrift.rpc.zookeeper.ThriftServerAddressProvider;
  */
 public class ThriftClientPoolFactory extends BasePoolableObjectFactory<TServiceClient> {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	private final ThriftServerAddressProvider serverAddressProvider;
 	private final TServiceClientFactory<TServiceClient> clientFactory;
 	private PoolOperationCallBack callback;
@@ -42,20 +46,32 @@ public class ThriftClientPoolFactory extends BasePoolableObjectFactory<TServiceC
 		void make(TServiceClient client);
 	}
 
+	@Override
 	public void destroyObject(TServiceClient client) throws Exception {
 		if (callback != null) {
 			try {
 				callback.destroy(client);
 			} catch (Exception e) {
-				//
+				logger.warn("destroyObject:{}", e);
 			}
 		}
-		TTransport pin = client.getInputProtocol().getTransport();
+		TTransport pin = client.getOutputProtocol().getTransport();
+		logger.info("destroyObject:", client);
 		pin.close();
 	}
 
+	@Override
+	public void activateObject(TServiceClient client) throws Exception {
+	}
+
+	@Override
+	public void passivateObject(TServiceClient client) throws Exception {
+	}
+
+	@Override
 	public boolean validateObject(TServiceClient client) {
-		TTransport pin = client.getInputProtocol().getTransport();
+		TTransport pin = client.getOutputProtocol().getTransport();
+		logger.info("validateObject:", pin.isOpen());
 		return pin.isOpen();
 	}
 
@@ -71,7 +87,7 @@ public class ThriftClientPoolFactory extends BasePoolableObjectFactory<TServiceC
 			try {
 				callback.make(client);
 			} catch (Exception e) {
-				//
+				logger.warn("makeObject:{}", e);
 			}
 		}
 		return client;

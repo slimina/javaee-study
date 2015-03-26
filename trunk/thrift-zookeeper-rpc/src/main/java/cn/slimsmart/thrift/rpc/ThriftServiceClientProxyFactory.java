@@ -7,6 +7,8 @@ import java.lang.reflect.Proxy;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.thrift.TServiceClient;
 import org.apache.thrift.TServiceClientFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -18,6 +20,8 @@ import cn.slimsmart.thrift.rpc.zookeeper.ThriftServerAddressProvider;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ThriftServiceClientProxyFactory implements FactoryBean, InitializingBean {
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private Integer maxActive = 32;// 最大活跃连接数
 
@@ -34,12 +38,12 @@ public class ThriftServiceClientProxyFactory implements FactoryBean, Initializin
 	private PoolOperationCallBack callback = new PoolOperationCallBack() {
 		@Override
 		public void make(TServiceClient client) {
-			System.out.println("create");
+			logger.info("create");
 		}
 
 		@Override
 		public void destroy(TServiceClient client) {
-			System.out.println("destroy");
+			logger.info("destroy");
 		}
 	};
 	
@@ -66,21 +70,30 @@ public class ThriftServiceClientProxyFactory implements FactoryBean, Initializin
 		ThriftClientPoolFactory clientPool = new ThriftClientPoolFactory(serverAddressProvider, clientFactory, callback);
 		GenericObjectPool.Config poolConfig = new GenericObjectPool.Config();
 		poolConfig.maxActive = maxActive;
+		poolConfig.maxIdle = 1;
 		poolConfig.minIdle = 0;
 		poolConfig.minEvictableIdleTimeMillis = idleTime;
-		poolConfig.timeBetweenEvictionRunsMillis = idleTime / 2L;
+		poolConfig.timeBetweenEvictionRunsMillis = idleTime * 2L;
+		poolConfig.testOnBorrow=true;
+		poolConfig.testOnReturn=false;
+		poolConfig.testWhileIdle=false;
+		
 		pool = new GenericObjectPool<TServiceClient>(clientPool, poolConfig);
 		proxyClient = Proxy.newProxyInstance(classLoader, new Class[] { objectClass }, new InvocationHandler() {
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				//
 				TServiceClient client = pool.borrowObject();
+				boolean flag = true;
 				try {
 					return method.invoke(client, args);
 				} catch (Exception e) {
+					flag = false;
 					throw e;
 				} finally {
-					pool.returnObject(client);
+					if(flag){
+						pool.returnObject(client);
+					}
 				}
 			}
 		});
