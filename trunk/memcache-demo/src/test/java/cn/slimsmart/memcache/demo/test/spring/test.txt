@@ -104,12 +104,15 @@ maven仓库：http://mvnrepository.com/artifact/com.google.code.simple-spring-me
 spring继承对于spymemcached、xmemcached和aws-elasticache都有实现如：spymemcached-provider、xmemcached-provider、aws-elasticache-provider 
 使用文档：https://code.google.com/p/simple-spring-memcached/wiki/Getting_Started 
 
+
+
+
 详情请参考代码示例： 
 
 参考文章： 
-基于自定义注解和aop 实现使用memcache 对数据库的缓存示例 
+1.基于自定义注解和aop 实现使用memcache 对数据库的缓存示例 
 http://www.tuicool.com/articles/emqQjui 
-spring mybatis memcached集成
+2.spring mybatis memcached集成
 https://github.com/batizhao/spring-mybatis-memcached
 
 
