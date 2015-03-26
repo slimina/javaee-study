@@ -11,12 +11,15 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration(locations="classpath:applicationContext-cache-xmemcached.xml") 
+//@ContextConfiguration(locations="classpath:applicationContext-cache-xmemcached.xml") 
 //@ContextConfiguration(locations="classpath:applicationContext-cache-spymemcached.xml")  
 //@ContextConfiguration(locations="classpath:applicationContext-cache-aws-elasticache.xml") 
+@ContextConfiguration(locations="classpath:applicationContext-cache-spring3.1.xml") 
 public class XmemcachedTest  extends AbstractJUnit4SpringContextTests { 
 	@Autowired
 	private StudentDao studentDao;
+	@Autowired 
+	private StudentCacheable studentCacheable;
 	
 	@Test
 	public void testGet(){
@@ -43,5 +46,18 @@ public class XmemcachedTest  extends AbstractJUnit4SpringContextTests {
 		s.setName("test_cache");
 		s.setBirthday(new Date());
 		studentDao.updateStudent(s);
+	}
+	
+	
+	//--------载入applicationContext-cache-spring3.1.xml
+	@Test
+	public void testSpringCacheSave(){
+		System.out.println(studentCacheable.get("user_10001"));
+	}
+	@Test
+	public void testSpringCachedelete(){
+		Student student = new Student();
+		student.setId("user_10001");
+		studentCacheable.delete(student);
 	}
 }
