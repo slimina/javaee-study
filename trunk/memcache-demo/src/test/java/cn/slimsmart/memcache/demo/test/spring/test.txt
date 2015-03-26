@@ -114,6 +114,3 @@ spring继承对于spymemcached、xmemcached和aws-elasticache都有实现如：s
 http://www.tuicool.com/articles/emqQjui 
 2.spring mybatis memcached集成
 https://github.com/batizhao/spring-mybatis-memcached
-
-
-
