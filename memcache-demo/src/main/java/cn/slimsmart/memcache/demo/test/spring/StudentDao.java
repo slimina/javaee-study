@@ -28,8 +28,10 @@ public class StudentDao {
 	 * @ReadThroughMultiCache  返回值 获得参数 和 保存一样，都只能使用List 这里比较纠结
 	 * @ReadThroughAssignCache 指定assignedKey，无参数方法
 	 * key生成规则：ParameterValueKeyProvider指定的参数，如果该参数对象中包含CacheKeyMethod注解的方法，则调用其方法，否则调用toString方法
+	 * 
+	 * expiration单位是秒
 	 */
-	@ReadThroughSingleCache(namespace=NAMESPACE,expiration=3600)
+	@ReadThroughSingleCache(namespace=NAMESPACE,expiration=10)
 	public Student get(@ParameterValueKeyProvider String key){
 		System.out.println("缓存没有命中");
 		Student s = new Student();

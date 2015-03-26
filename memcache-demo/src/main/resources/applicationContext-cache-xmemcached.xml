@@ -27,7 +27,7 @@
 			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
 				<!-- address属性定义了缓存节点的IP地址和端口号 memcached 服务器地址，可配置多个，用“，”号隔开 -->
 				<property name="address"
-					value="127.0.0.1:11211" />
+					value="192.168.100.110:11211,192.168.100.110:11311,192.168.100.110:11411" />
 			</bean>
 		</property>
 		<property name="configuration">
