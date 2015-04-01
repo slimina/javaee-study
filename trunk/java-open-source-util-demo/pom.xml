@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.slimsmart.open.source</groupId>
+	<artifactId>java-open-source-util-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>
+  	java 开源项目工具实例
+  	</description>
+	<dependencies>
+		<!-- apache directmemory -->
+		<dependency>
+			<groupId>org.apache.directmemory</groupId>
+			<artifactId>directmemory-cache</artifactId>
+			<version>0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+	</dependencies>
+</project>
