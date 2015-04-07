@@ -10,6 +10,17 @@ public class Order implements Serializable{
 	private String orderNo;
 	private double price;
 	private Date createDate;
+	
+	public Order(String id,String orderNo,double price,Date createDate){
+		this.id = id;
+		this.orderNo = orderNo;
+		this.price = price;
+		this.createDate = createDate;
+	}
+	
+	public Order(){
+		
+	}
 	public String getId() {
 		return id;
 	}

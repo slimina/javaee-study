@@ -10,11 +10,13 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import cn.slimsmart.redis.spring.data.redis.demo.Order;
 
 
+@SuppressWarnings("rawtypes")
 public class BaseTest {
 	
 	protected ApplicationContext applicationContext;
 	protected StringRedisTemplate stringRedisTemplate;
-	protected RedisTemplate<?, ?> redisTemplate;
+	
+	protected RedisTemplate redisTemplate;
 	
 	protected Order order;
 	
@@ -22,7 +24,7 @@ public class BaseTest {
 	public void before() throws Exception {
 		applicationContext = new ClassPathXmlApplicationContext("applicationContext-redis.xml");
 		stringRedisTemplate = applicationContext.getBean(StringRedisTemplate.class);
-		redisTemplate = (RedisTemplate<?, ?>)applicationContext.getBean("redisTemplate");
+		redisTemplate = (RedisTemplate)applicationContext.getBean("redisTemplate");
 		
 		order = new Order();
 		order.setId("10000");

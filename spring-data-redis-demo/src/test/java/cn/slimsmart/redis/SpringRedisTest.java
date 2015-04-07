@@ -1,9 +1,10 @@
 package cn.slimsmart.redis;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.core.annotation.Order;
+import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -16,57 +17,63 @@ import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.query.SortQueryBuilder;
 
+import cn.slimsmart.redis.spring.data.redis.demo.Order;
+
+@SuppressWarnings("unchecked")
 public class SpringRedisTest extends BaseTest{
 	
-	public void valueOperationSample(){  
-        ValueOperations<String, Order> valueOper = redisTemplate.opsForValue();  
-        User suser = new User(1,"zhangsan",12);  
-        valueOper.set("user:" + suser.getId(),suser);  
-        System.out.println(valueOper.get("user:" + suser.getId()).getName());  
+	@Test
+	public void valueOperationTest(){  
+		ValueOperations<String, Order> valueOper = (ValueOperations<String, Order>)redisTemplate.opsForValue();  
+        Order order = new Order("10000","OA1110",11.0,new Date());  
+        valueOper.set("order:" + order.getId(),order);  
+        System.out.println(valueOper.get("order:" + order.getId()).getOrderNo());  
+    }  
+	@Test
+    public void listOperationTest(){  
+    	Order order = new Order("10000","OA1110",11.0,new Date());  
+        ListOperations<String, Order> listOper = (ListOperations<String, Order> )redisTemplate.opsForList();  
+        listOper.leftPush("user:list", order);//lpush,head  
+        listOper.rightPush("user:list", order);//rpush,tail  
     }  
       
-    public void listOperationSample(){  
-        User suser = new User(1,"zhangsan",12);  
-        ListOperations<String, User> listOper = redisTemplate.opsForList();  
-        listOper.leftPush("user:list", suser);//lpush,head  
-        listOper.rightPush("user:list", suser);//rpush,tail  
-    }  
-      
-    public void boundValueOperationSample(){  
-        User suser = new User(1,"zhangsan",12);  
-        BoundValueOperations<String, User> bvo = redisTemplate.boundValueOps("user:" + suser.getId());  
-        bvo.set(suser);  
+    public void boundValueOperationTest(){  
+    	Order order = new Order("10000","OA1110",11.0,new Date());    
+        BoundValueOperations<String, Order> bvo = (BoundValueOperations<String, Order>)redisTemplate.boundValueOps("order:" + order.getId());  
+        bvo.set(order);  
         bvo.expire(60, TimeUnit.MINUTES);  
     }  
       
     /** 
-     * 非连接池环境下，事务操作；对于sdr而言，每次操作(例如，get，set)都有会从pool中获取connection； 
+     * 非连接池环境下，事务操作；对于spring data redis而言，每次操作(例如，get，set)都有会从pool中获取connection； 
      * 因此在连接池环境下，使用事务需要注意。 
      */  
-    public void txUnusedPoolSample(){  
-        User suser = new User(1,"zhangsan",12);  
-        redisTemplate.watch("user:" + suser.getId());  
+    @Test
+    public void txUnusedPoolTest(){  
+    	Order order = new Order("10000","OA1110",11.0,new Date());    
+        redisTemplate.watch("order:" + order.getId());  
         redisTemplate.multi();  
-        ValueOperations<String, User> tvo = redisTemplate.opsForValue();  
-        tvo.set("user:" + suser.getId(), suser);  
+        ValueOperations<String, Order> tvo = redisTemplate.opsForValue();  
+        tvo.set("user:" + order.getId(), order);  
         redisTemplate.exec();  
     }  
       
     /** 
      * 在连接池环境中，需要借助sessionCallback来绑定connection 
      */  
-    public void txUsedPoolSample(){  
-        SessionCallback<User> sessionCallback = new SessionCallback<User>() {  
+    @Test
+    public void txUsedPoolTest(){  
+        SessionCallback<Order> sessionCallback = new SessionCallback<Order>() {  
             @Override  
-            public User execute(RedisOperations operations) throws DataAccessException {  
+            public Order execute(@SuppressWarnings("rawtypes") RedisOperations operations) throws DataAccessException {  
                 operations.multi();  
-                User user = new User(2,"lisi",32);  
-                String key = "user:" + user.getId();  
-                BoundValueOperations<String, User> oper = operations.boundValueOps(key);  
-                oper.set(user);  
+                Order order = new Order("10000","OA1110",11.0,new Date());  
+                String key = "order:" + order.getId();  
+                BoundValueOperations<String, Order> oper = operations.boundValueOps(key);  
+                oper.set(order);  
                 oper.expire(60, TimeUnit.MINUTES);  
                 operations.exec();  
-                return user;  
+                return order;  
             }  
         };  
         redisTemplate.execute(sessionCallback);  
@@ -75,7 +82,8 @@ public class SpringRedisTest extends BaseTest{
     /** 
      * pipeline : 1，正确使用方式 
      */  
-    public void pipelineSample(){  
+    @Test
+    public void pipelineTest(){  
         final byte[] rawKey = redisTemplate.getKeySerializer().serialize("user_total");  
         //pipeline  
         RedisCallback<List<Object>> pipelineCallback = new RedisCallback<List<Object>>() {  
@@ -94,8 +102,10 @@ public class SpringRedisTest extends BaseTest{
             System.out.println(item.toString());  
         }  
     }  
+    
+    @Test
     //pipeline:备用方式  
-    public void pipelineSampleX(){  
+    public void pipelineXTest(){  
         byte[] rawKey = redisTemplate.getKeySerializer().serialize("user_total");  
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();  
         RedisConnection redisConnection = RedisConnectionUtils.getConnection(factory);  
@@ -115,18 +125,19 @@ public class SpringRedisTest extends BaseTest{
         }  
   
     }  
-/** 
+    /** 
      * list/set排序，注意排序是根据value值的“字符”特性排序，如果value是java-object字节流，将不会有效 
      */  
-    public void sort(){  
-        ListOperations<String, String> listOper = redisTemplate.opsForList();  
+    @Test
+    public void sortTest(){  
+		ListOperations<String, String> listOper = redisTemplate.opsForList();  
         String listKey = "user:list";  
         listOper.leftPush(listKey, "zhangsan");  
         listOper.leftPush(listKey, "lisi");  
         listOper.leftPush(listKey, "wanger");  
         SortQueryBuilder<String> builder = SortQueryBuilder.sort(listKey);  
         builder.alphabetical(true);//对字符串使用“字典顺序”  
-        builder.order(Order.DESC);//倒序  
+        builder.order(org.springframework.data.redis.connection.SortParameters.Order.DESC);//倒序  
         builder.limit(0, 2);  
         //builder.limit(new Range(0, 2));  
         List<String> results = redisTemplate.sort(builder.build());  
