@@ -17,6 +17,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
  * redis 分布式锁实现
  *
  */
+@SuppressWarnings("resource")
 public class RedisLockHandler implements IRedisLockHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RedisLockHandler.class);
