@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssdbj>
+	<!-- 定义节点实例，并制定是否为master，以下为双主配置-->
+	<ssdb_node id="ssdb_db1" master="true" host="192.168.36.54"
+		port="8888" user="" password="" loginTimeout="3" tcpKeepAlive="true"
+		protocolName="ssdb" maxTotal="200" maxIdle="10" minIdle="5"
+		testWhileIdle="true" />
+	<ssdb_node id="ssdb_db2" master="true" host="192.168.36.189"
+		port="8888" user="" password="" loginTimeout="3" tcpKeepAlive="true"
+		protocolName="ssdb" maxTotal="200" maxIdle="10" minIdle="5"
+		testWhileIdle="true" />
+	<!-- 集群定义 -->
+	<clusters>
+		<cluster id="ssdb_cluster" notfound_master_retry="true"
+			error_retry_times="3" error_master_retry="true" retry_interval="500"
+			balance="random_weight">
+			<!-- 指定上面节点，支持权重，读写模式 -->
+			<ssdb_node weight="1" rwMode="rw">ssdb_db1</ssdb_node>
+			<ssdb_node weight="2" rwMode="rw">ssdb_db2</ssdb_node>
+		</cluster>
+	</clusters>
+</ssdbj>
