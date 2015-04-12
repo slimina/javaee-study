@@ -6,9 +6,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-/**
- * 采用RedisCallback实现 HMSet HMGet
- */
 @Repository
 public class OrderDao {
 

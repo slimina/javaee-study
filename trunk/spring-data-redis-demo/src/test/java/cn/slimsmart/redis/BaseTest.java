@@ -25,6 +25,7 @@ public class BaseTest {
 		applicationContext = new ClassPathXmlApplicationContext("applicationContext-redis.xml");
 		stringRedisTemplate = applicationContext.getBean(StringRedisTemplate.class);
 		redisTemplate = (RedisTemplate)applicationContext.getBean("redisTemplate");
+		//stringRedisTemplate使用和redisTemplate类似
 		
 		order = new Order();
 		order.setId("10000");
