@@ -1,4 +1,4 @@
-package cn.slimsmart.activemq.demo.queue;
+package cn.slimsmart.activemq.demo.exclusive;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -25,7 +25,7 @@ public class Producer {
 		// 获取操作连接 一个发送或接收消息的线程
 		Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 		// 获取session注意参数值slimsmart.queue是一个queue
-		Destination destination = session.createQueue("slimsmart.queue.test");
+		Destination destination = session.createQueue("queue.exclusive");
 		// 得到消息生成者【发送者】
 		MessageProducer producer = session.createProducer(destination);
 		// 设置持久化，

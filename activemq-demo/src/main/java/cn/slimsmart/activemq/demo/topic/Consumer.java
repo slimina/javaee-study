@@ -15,12 +15,12 @@ public class Consumer {
 
 	public static void main(String[] args) throws JMSException {
 		// 连接到ActiveMQ服务器
-		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://192.168.110.71:61616");
+		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("tcp://192.168.18.43:61616");
 		Connection connection = factory.createConnection();
 		connection.start();
-		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		final Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 		// 创建主题 
-		Topic topic = session.createTopic("slimsmart.topic.aaaa");
+		Topic topic = session.createTopic("slimsmart.topic.test");
 		// 创建订阅
 		MessageConsumer consumer = session.createConsumer(topic);
 		consumer.setMessageListener(new MessageListener() {
@@ -28,7 +28,8 @@ public class Consumer {
 			public void onMessage(Message message) {
 				TextMessage tm = (TextMessage) message;
 				try {
-					System.out.println("Received message: " + tm.getText());
+					System.out.println("Received message: " + tm.getText()+":"+tm.getStringProperty("property"));
+					session.commit();
 				} catch (JMSException e) {
 					e.printStackTrace();
 				}

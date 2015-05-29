@@ -25,16 +25,16 @@
                 <!-- MQ地址 -->  
                 <property name="brokerURL" value="tcp://192.168.18.43:61616" />  
                  <!-- 是否异步发送 -->  
-                <property name="useAsyncSend" value="true" />  
+                <property name="useAsyncSend" value="false" />  
             </bean>  
         </property>  
     </bean> 
 
-	<!-- 定义队列 -->
+ 	<!-- 定义队列 -->
 	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<property name="physicalName" value="spring.queue" />
+		<property name="physicalName" value="spring.queue.converte" />
 	</bean>
-
+    
 	<!-- jmsTemplate，用于向任意地址发送消息 -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
@@ -42,5 +42,9 @@
 		<property name="sessionTransacted" value="false" />
 		<!-- receiveTimeout表示接收消息时的超时时间 -->
 		<property name="receiveTimeout" value="30000" />
+		<!-- 消息转换器 -->  
+   		<property name="messageConverter" ref="userMessageConverter"/>  
 	</bean>
+	   <!-- 类型转换器 -->  
+	<bean id="userMessageConverter" class="cn.slimsmart.activemq.demo.spring.msgconverter.UserMessageConverter"/>  
 </beans>

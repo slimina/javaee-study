@@ -19,28 +19,38 @@
     <bean id="connectionFactory"  
         class="org.springframework.jms.connection.CachingConnectionFactory">  
         <!-- Session缓存数量 -->  
-        <property name="sessionCacheSize" value="10" />  
+        <property name="sessionCacheSize" value="10" /> 
+        <!-- 接收者ID 持久化订阅  -->  
+  		<property name="clientId" value="client_test" />  
         <property name="targetConnectionFactory">  
             <bean class="org.apache.activemq.ActiveMQConnectionFactory">  
                 <!-- MQ地址 -->  
                 <property name="brokerURL" value="tcp://192.168.18.43:61616" />  
-                 <!-- 是否异步发送 -->  
-                <property name="useAsyncSend" value="true" />  
             </bean>  
         </property>  
     </bean> 
-
-	<!-- 定义队列 -->
-	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<property name="physicalName" value="spring.queue" />
-	</bean>
-
-	<!-- jmsTemplate，用于向任意地址发送消息 -->
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="defaultDestination" ref="testQueue" />
-		<property name="sessionTransacted" value="false" />
-		<!-- receiveTimeout表示接收消息时的超时时间 -->
-		<property name="receiveTimeout" value="30000" />
-	</bean>
+	
+	 <!-- 发送消息的目的地（一个主题） -->  
+    <bean id="testDestination" class="org.apache.activemq.command.ActiveMQTopic">  
+        <!-- 设置消息主题的名字 -->  
+        <constructor-arg index="0" value="spring.Topic" />  
+    </bean>  
+	
+    <!-- 异步接收Queue消息Container -->  
+    <bean id="queueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
+        <property name="connectionFactory" ref="connectionFactory" />  
+        <property name="destination" ref="testDestination" />  
+        <property name="messageListener" ref="notifyMessageListener" />  
+        <!-- 普通发布订阅模式 -->  
+<!--         <property name="pubSubDomain" value="true"/> -->
+        <property name="receiveTimeout" value="30000"/>
+        
+        <!-- 持久化订阅配置  -->
+		<property name="subscriptionDurable" value="true"/>
+		<property name="clientId" value="client_test" />  
+        <property name="durableSubscriptionName" value="client_test"/>  
+        
+    </bean>  
+    
+    <bean id="notifyMessageListener" class="cn.slimsmart.activemq.demo.spring.NotifyMessageListener"></bean>
 </beans>
