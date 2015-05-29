@@ -25,21 +25,23 @@
                 <!-- MQ地址 -->  
                 <property name="brokerURL" value="tcp://192.168.18.43:61616" />  
                  <!-- 是否异步发送 -->  
-                <property name="useAsyncSend" value="true" />  
+                <property name="useAsyncSend" value="false" />  
             </bean>  
         </property>  
     </bean> 
 
-	<!-- 定义队列 -->
-	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<property name="physicalName" value="spring.queue" />
-	</bean>
-
+ 	<!-- 发送消息的目的地（一个主题） -->  
+    <bean id="testDestination" class="org.apache.activemq.command.ActiveMQTopic">  
+        <!-- 设置消息主题的名字 -->  
+        <constructor-arg index="0" value="spring.Topic" />  
+    </bean>  
+    
 	<!-- jmsTemplate，用于向任意地址发送消息 -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="defaultDestination" ref="testQueue" />
-		<property name="sessionTransacted" value="false" />
+		<property name="defaultDestination" ref="testDestination" />
+		<!-- 订阅发布模式 -->  
+		<property name="pubSubDomain" value="true" />
 		<!-- receiveTimeout表示接收消息时的超时时间 -->
 		<property name="receiveTimeout" value="30000" />
 	</bean>

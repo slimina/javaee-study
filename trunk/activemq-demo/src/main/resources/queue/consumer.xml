@@ -15,40 +15,24 @@
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 			http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
 
-	<!-- 带缓存功能的连接工厂 -->
-	<bean id="connectionFactory"
-		class="org.springframework.jms.connection.CachingConnectionFactory"
-		destroy-method="destroy">
-		<property name="targetConnectionFactory">
-			<bean class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-				<!-- tcp连接字符串 -->
-				<property name="brokerURL">
-					<value>failover:(tcp://192.168.110.71:61616?wireFormat.maxInactivityDuration=300000&amp;wireFormat.maxInactivityDurationInitalDelay=120000)</value>
-				</property>
-				<property name="copyMessageOnSend" value="false" />
-				<property name="optimizeAcknowledge" value="false" />
-				<property name="redeliveryPolicy">
-					<bean class="org.apache.activemq.RedeliveryPolicy">
-						<!--  接收失败，最多发6次   -->
-						<property name="maximumRedeliveries" value="6" />
-					</bean>
-				</property>
-			</bean>
-		</property>
-		<property name="sessionCacheSize" value="10" />
-		<property name="cacheConsumers" value="true" />
-		<property name="cacheProducers" value="true" />
-	</bean>
+	 <!-- 配置JMS连接工厂 -->  
+    <bean id="connectionFactory"  
+        class="org.springframework.jms.connection.CachingConnectionFactory">  
+        <!-- Session缓存数量 -->  
+        <property name="sessionCacheSize" value="10" />  
+        <property name="targetConnectionFactory">  
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">  
+                <!-- MQ地址 -->  
+                <property name="brokerURL" value="tcp://192.168.18.43:61616" />  
+            </bean>  
+        </property>  
+    </bean> 
 	
 	<!-- 定义队列 -->
 	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<property name="physicalName" value="test.queue" />
+		<property name="physicalName" value="spring.queue" />
 	</bean>
 	
-	<!-- 
-	DefaultMessageListenerContainer继承自AbstractPollingMessageListenerContainer，
-	主要使用同步的方式接收消息（也就是通过循环调用MessageConsumer.receive的方式接收消息）。
-	 -->
     <!-- 异步接收Queue消息Container -->  
     <bean id="queueContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">  
         <property name="connectionFactory" ref="connectionFactory" />  
@@ -60,5 +44,12 @@
         <property name="sessionTransacted" value="false" />
         <!-- 设置消息确认模式为Client -->  
         <property name="sessionAcknowledgeModeName" value="CLIENT_ACKNOWLEDGE" />  
+        
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置为true，默认false-->  
+<!-- 		<property name="explicitQosEnabled" value="true" />  -->
+		 <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久 -->  
+<!-- 		 <property name="deliveryMode" value="1" /> -->
     </bean>  
+    
+    <bean id="notifyMessageListener" class="cn.slimsmart.activemq.demo.spring.NotifyMessageListener"></bean>
 </beans>

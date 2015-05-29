@@ -1,4 +1,4 @@
-package cn.slimsmart.activemq.demo.queue;
+package cn.slimsmart.activemq.demo.exclusive;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -26,8 +26,8 @@ public class Consumer {
 		// 获取操作连接 一个发送或接收消息的线程
 		//第一个参数为true  标识开启事务，需要手工commit
 		final Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-		// 获取session注意参数值slimsmart.queue是一个服务器的queue，星号*匹配任意字符
-		Destination destination = session.createQueue("slimsmart.queue.test");
+		// consumer.exclusive=true 消费独占，也就是只能有一个消费者消费
+		Destination destination = session.createQueue("queue.exclusive?consumer.exclusive=true");
 		// 消费者，消息接收者
 		MessageConsumer consumer = session.createConsumer(destination);
 		consumer.setMessageListener( new MessageListener() {
@@ -41,17 +41,7 @@ public class Consumer {
 				}
 			}
 		});
-		Thread.sleep(100000);
-		/*
-		while (true) {
-            //设置接收者接收消息的时间，为了便于测试，这里设定为100s
-            TextMessage message = (TextMessage) consumer.receive(100000);
-            if (null != message) {
-                System.out.println("收到消息" + message.getText());
-            } else {
-                break;
-            }
-        }*/
+		Thread.sleep(100000000);
 		session.close();
 		connection.close();
 	}
