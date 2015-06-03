@@ -6,4 +6,13 @@
        <class name="cn.slimsmart.unit.test.demo.testng.TestNGTest"/>
     </classes>
   </test>
+  <test name="test_spring">
+    <classes>
+       <class name="cn.slimsmart.unit.test.demo.testng.SpringTestNG">
+       		<methods>
+       			<include name="testAdd" />
+       		</methods>
+       </class>
+    </classes>
+  </test>
 </suite>
