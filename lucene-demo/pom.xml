@@ -5,9 +5,8 @@
 	<artifactId>lucene-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<lucene.version>5.1.0</lucene.version>
+		<lucene.version>4.10.4</lucene.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId> org.apache.lucene</groupId>
@@ -23,6 +22,18 @@
 			<groupId> org.apache.lucene</groupId>
 			<artifactId> lucene-queryparser</artifactId>
 			<version> ${lucene.version}</version>
+		</dependency>
+		<dependency>
+			<groupId> org.apache.lucene</groupId>
+			<artifactId> lucene-highlighter</artifactId>
+			<version> ${lucene.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wltea.ik-analyzer</groupId>
+			<artifactId>IKAnalyzer2012FF_u1</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/IKAnalyzer2012FF_u1.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

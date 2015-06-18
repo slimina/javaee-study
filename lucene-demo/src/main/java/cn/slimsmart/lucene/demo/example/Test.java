@@ -1,7 +1,6 @@
 package cn.slimsmart.lucene.demo.example;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -21,6 +20,7 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 
 public class Test {
 
@@ -30,13 +30,12 @@ public class Test {
 	}
 
 	public static void createIndex() throws Exception {
-		String pathFile = new File("src/main/resources").getAbsolutePath();
 		// 索引文件的保存位置
-		Directory dir = FSDirectory.open(Paths.get(pathFile));
+		Directory dir = FSDirectory.open(new File("src/main/resources"));
 		// 分析器:负责分析一个文件，并从将被索引的文本获取令牌/字
 		Analyzer analyzer = new StandardAnalyzer();
 		// 配置类
-		IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+		IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_4_10_4,analyzer);
 		/**
 		 APPEND：总是追加，可能会导致错误，索引还会重复，导致返回多次结果
 		 CREATE：清空重建（推荐）
@@ -62,8 +61,7 @@ public class Test {
 	}
 
 	public static void search() throws Exception {  
-		String pathFile = new File("src/main/resources").getAbsolutePath();
-		Directory dir = FSDirectory.open(Paths.get(pathFile));
+		Directory dir = FSDirectory.open(new File("src/main/resources"));
 		IndexReader reader=DirectoryReader.open(dir);  
         IndexSearcher searcher=new IndexSearcher(reader);  
         //对于中文查询，需要分词
