@@ -18,6 +18,7 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+@SuppressWarnings("deprecation")
 public class IKAnalyzerTest1 {
 
 	public static void main(String[] args) throws Exception {
