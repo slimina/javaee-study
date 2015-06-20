@@ -32,13 +32,20 @@
 		</dependency>
 		<dependency>
 			<groupId>com.chenlb.mmseg4j</groupId>
-			<artifactId>mmseg4j-dic</artifactId>
-			<version>1.8.6</version>
+			<artifactId>mmseg4j-core</artifactId>
+			<version>1.10.0</version>
 		</dependency>
+		<!--  如下可以编译最新的mmseg4j-analysis替换，不然加载报错 -->
 		<dependency>
 			<groupId>com.chenlb.mmseg4j</groupId>
-			<artifactId>mmseg4j-analysis</artifactId>
-			<version>1.8.6</version>
+			<artifactId>mmseg4j-solr</artifactId>
+			<version>2.3.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.solr</groupId>
+					<artifactId>solr-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

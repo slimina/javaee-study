@@ -19,9 +19,6 @@ import org.apache.lucene.store.RAMDirectory;
 
 import com.chenlb.mmseg4j.analysis.ComplexAnalyzer;
 
-//http://blog.sina.com.cn/s/blog_5d3b15920101n4u9.html
-//http://www.01yun.com/webkaifa_querstion/20130322/263665.html
-//http://blog.chenlb.com/2009/04/use-chinese-segment-mmseg4j-in-lucene-demo.html
 public class Test {
 	static Analyzer analyzer = null;
 	static Directory directory = null;
