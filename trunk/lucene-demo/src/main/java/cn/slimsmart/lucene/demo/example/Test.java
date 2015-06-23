@@ -52,6 +52,7 @@ public class Test {
 			doc.add(new StringField("id", u.getId(), Store.YES));
 			doc.add(new StringField("name",u.getName(), Store.YES));
 			doc.add(new StringField("desc", u.getDesc(), Store.YES));
+			
 			System.out.println(doc);
 			writer.addDocument(doc);
 		}
