@@ -35,7 +35,19 @@
 			<artifactId>mmseg4j-core</artifactId>
 			<version>1.10.0</version>
 		</dependency>
-		<!--  如下可以编译最新的mmseg4j-analysis替换，不然加载报错 -->
+		<dependency>
+			<groupId>org.htmlparser</groupId>
+			<artifactId>htmlparser</artifactId>
+			<version>2.1</version>
+			<exclusions>
+				<exclusion>
+					 <groupId>com.sun</groupId>
+          			 <artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- 如下可以编译最新的mmseg4j-analysis替换，不然加载报错 -->
 		<dependency>
 			<groupId>com.chenlb.mmseg4j</groupId>
 			<artifactId>mmseg4j-solr</artifactId>
