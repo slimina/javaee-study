@@ -5,33 +5,33 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.common.SolrInputDocument;
 
-// 采用SolrInputDocument对象增加、删除索引
-public class Test {
+// 采用POJOs增加、删除索引
+public class Test1 {
 
 	static String URL = "http://192.168.18.119:9080/solr/test";
 
 	public static void main(String[] args) {
 		addDocs();
-		//delDocs();
+		delDocs();
 	}
 
 	public static void addDocs() {
 		long start = System.currentTimeMillis();
-		Collection<Student> docs = new ArrayList<Student>();
+		Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
 		for (int i = 1; i < 50; i++) {
-			Student s = new Student();
+			SolrInputDocument doc1 = new SolrInputDocument();
 			//各属性的名称在conf/schema.xml中存在
-			s.setId("efgh00"+i);
-			s.setName("li si" + i);
-			s.setAge(3 * i);
-			s.setDesc(i+"今天天气很好");
-			docs.add(s);
+			doc1.addField("id", "abcd00" + i, 1.0f);
+			doc1.addField("name", "zhan shan" + i, 1.0f);
+			doc1.addField("age", 2 * i);
+			doc1.addField("desc", "Apache Devicemap is a data repository containing devices attributes " + i);
+			docs.add(doc1);
 		}
 		try {
 			HttpSolrClient client = new HttpSolrClient(URL);
-			client.addBeans(docs);
-			client.optimize();
+			client.add(docs.iterator());
 			client.commit();
 			client.close();
 		} catch (Exception e) {
@@ -46,7 +46,7 @@ public class Test {
 			HttpSolrClient client = new HttpSolrClient(URL);
 			List<String> ids = new ArrayList<String>();
 			for (int i = 1; i < 10; i++) {
-				ids.add("efgh00" + i);
+				ids.add("abcd00" + i);
 			}
 			client.deleteById(ids);
 			client.commit();
