@@ -10,16 +10,16 @@
 			<artifactId>hazelcast</artifactId>
 			<version>3.5</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-client</artifactId>
 			<version>3.5</version>
 		</dependency>
 	</dependencies>
-	
+
 	<!-- http://www.jdon.com/concurrent/getting-started-with-hazelcast.html -->
-	
+
 	<repositories>
 		<repository>
 			<id>sonatype</id>
@@ -32,9 +32,12 @@
 			<url>http://repository.jboss.com/maven2/</url>
 		</repository>
 		<repository>
-			<id>codehaus</id>
-			<name>codehaus</name>
-			<url>http://repository.codehaus.org</url>
+			<id>codehaus-mule-repo</id>
+			<name>codehaus-mule-repo</name>
+			<url>
+      https://repository-master.mulesoft.org/nexus/content/groups/public/
+    </url>
+			<layout>default</layout>
 		</repository>
 		<repository>
 			<id>ibiblio</id>
