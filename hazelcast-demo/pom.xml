@@ -19,4 +19,27 @@
 	</dependencies>
 	
 	<!-- http://www.jdon.com/concurrent/getting-started-with-hazelcast.html -->
+	
+	<repositories>
+		<repository>
+			<id>sonatype</id>
+			<name>sonatype</name>
+			<url>http://repository.sonatype.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<name>jboss</name>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+		<repository>
+			<id>codehaus</id>
+			<name>codehaus</name>
+			<url>http://repository.codehaus.org</url>
+		</repository>
+		<repository>
+			<id>ibiblio</id>
+			<name>ibiblio</name>
+			<url>http://mirrors.ibiblio.org/maven2/com/</url>
+		</repository>
+	</repositories>
 </project>
