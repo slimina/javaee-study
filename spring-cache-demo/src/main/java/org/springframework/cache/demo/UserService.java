@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
  */
 public class UserService {
 
-	@Cacheable(value = "userCache")
+	@Cacheable(value = "userCache",key="#userName")
 	// 使用了一个缓存名叫 userCache
 	public User getUserByName(String userName) {
 		// 方法内部实现不考虑缓存逻辑，直接实现业务
@@ -17,7 +17,7 @@ public class UserService {
 		return getFromDB(userName);
 	}
 
-	@CacheEvict(value = "userCache", key = "#user.getName()")
+	@CacheEvict(value = "userCache", key = "#user.name")
 	// 清空 accountCache 缓存
 	public void updateUser(User user) {
 		updateDB(user);
