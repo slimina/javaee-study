@@ -12,13 +12,13 @@ public class MyMain {
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-mycache.xml");
 		UserService userService = context.getBean(UserService.class);
 		// 第一次查询，应该走数据库
-		System.out.print("first query...");
+		System.out.print("第一次查询...");
 		userService.getUserByName("hello");
 		// 第二次查询，应该不查数据库，直接返回缓存的值
-		System.out.println("second query...");
+		System.out.println("第二次查询...");
 		userService.getUserByName("hello");
 		System.out.println();
-		System.out.println("start testing clear cache...");
+		System.out.println("==============");
 
 		// 更新某个记录的缓存，首先构造两个用户记录，然后记录到缓存中
 		User user1 = userService.getUserByName("user1");
@@ -31,6 +31,7 @@ public class MyMain {
 		userService.getUserByName("user1");
 		// 更新所有缓存
 		userService.reload();
+		System.out.println("清楚所有缓存");
 		// 查询数据库
 		userService.getUserByName("user1");
 		userService.getUserByName("user2");
