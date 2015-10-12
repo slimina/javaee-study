@@ -5,11 +5,11 @@ import org.springframework.cache.demo.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class RedisMain2 {
+public class RedisMain1 {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-redis2.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring-cache-redis1.xml");
 		UserService userService = context.getBean(UserService.class);
 		// 第一次查询，应该走数据库
 		System.out.println("first query...");
