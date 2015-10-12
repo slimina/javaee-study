@@ -13,7 +13,6 @@ public class UserService {
 	// 使用了一个缓存名叫 userCache
 	public User getUserByName(String userName) {
 		// 方法内部实现不考虑缓存逻辑，直接实现业务
-		System.out.println("real query user." + userName);
 		return getFromDB(userName);
 	}
 
@@ -29,11 +28,11 @@ public class UserService {
 	}
 
 	private User getFromDB(String userName) {
-		System.out.println("real querying db..." + userName);
+		System.out.println("查询数据库..." + userName);
 		return new User(userName);
 	}
 
 	private void updateDB(User user) {
-		System.out.println("real update db..." + user.getName());
+		System.out.println("更新数据库数据..." + user.getName());
 	}
 }
