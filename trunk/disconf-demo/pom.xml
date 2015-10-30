@@ -4,18 +4,36 @@
 	<groupId>cn.slimsmart.disconf.demo</groupId>
 	<artifactId>disconf-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<jedis.version>2.7.2</jedis.version>
+		<disconf.version>2.6.24</disconf.version>
+		<spring.version>4.1.6.RELEASE</spring.version>
+	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.baidu.disconf</groupId>
 			<artifactId>disconf-client</artifactId>
-			<version>2.6.24</version>
+			<version>${disconf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>ibiblio</id>
-			<name>ibiblio</name>
-			<url>http://mirrors.ibiblio.org/maven2/com/</url>
-		</repository>
-	</repositories>
 </project>
