@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+	<diskStore path="java.io.tmpdir/ehcache-jgroups-5000" />
+
+	<!-- 使用单播方式配置 -->
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="connect=TCP(bind_addr=127.0.0.1;bind_port=5000):
+							TCPPING(initial_hosts=127.0.0.1[4000],127.0.0.1[5000];port_range=1;timeout=5000;num_initial_members=2):
+							MERGE2(min_interval=3000;max_interval=5000):
+							FD_ALL(interval=5000;timeout=20000):
+							FD(timeout=5000;max_tries=48;):
+							VERIFY_SUSPECT(timeout=1500):
+							pbcast.NAKACK(retransmit_timeout=100,200,300,600,1200,2400,4800;discard_delivered_msgs=true):
+							pbcast.STABLE(stability_delay=1000;desired_avg_gossip=20000;max_bytes=0):
+							pbcast.GMS(print_local_addr=true;join_timeout=5000)"
+		propertySeparator="::" />
+		
+     <!-- 
+     	使用多播方式配置
+     <cacheManagerPeerProviderFactory
+        class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+        properties="connect=UDP(mcast_addr=224.1.1.1;mcast_port=45678;ip_ttl=32;mcast_send_buf_size=120000;mcast_recv_buf_size=80000): 
+        PING(timeout=2000;num_initial_members=2): 
+        MERGE2(min_interval=5000;max_interval=10000): 
+        FD_SOCK:VERIFY_SUSPECT(timeout=1500): 
+        pbcast.NAKACK(retransmit_timeout=3000): 
+        UNICAST(timeout=5000): 
+        pbcast.STABLE(desired_avg_gossip=20000): 
+        FRAG: 
+        pbcast.GMS(join_timeout=5000;print_local_addr=true)"
+        propertySeparator="::" /> -->
+        
+	<!-- 默认缓存 -->
+	<defaultCache maxElementsInMemory="1000" eternal="true"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+		diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="true" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU">
+	</defaultCache>
+
+	<!-- demo缓存 -->
+	<cache name="demoCache" maxElementsInMemory="1000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+		diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true,
+        replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true" />
+        <!-- 用于在初始化缓存，以及自动设置 -->
+    <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoaderFactory"/>
+	</cache>
+</ehcache>
