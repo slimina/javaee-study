@@ -1,6 +1,0 @@
-#http://www.cnproxy.com
-#http://www.proxy360.cn
-#http://www.xker.com/ip/
-#http://www.35wl.com/tools/dlfwq.htm
-#http://nntime.com
-http://www.xicidaili.com

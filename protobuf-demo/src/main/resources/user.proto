@@ -1,8 +1,0 @@
-option java_package = "cn.slimsmart.protoc.demo";
-option java_outer_classname = "User";
-message UserInfo{
-	required string  id= 1 ;
-	required string name= 2 [default = "Jack"];
-	required int32 age = 3 [default = 20];
-	optional string desc = 4;
-}
