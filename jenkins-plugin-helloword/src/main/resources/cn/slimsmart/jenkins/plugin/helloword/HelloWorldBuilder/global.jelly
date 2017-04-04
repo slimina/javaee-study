@@ -1,0 +1,14 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <!--
+title为标题，表示要显示的内容。field为将调用DescriptorImpl内部类的方法getUseFrench()，field域会将方法去掉get并且将第一个字母小写，找到相对应的方法。description将显示描述信息。f:checkbox为复选框控件。
+在每次保存全局配置时，jenkins都会调用该descriptor对象，并调用其configure方法，可以实现该方法并提供自己的定制
+在DescriptorImpl中的configure方法中，可以对全局配置进行操作。save方法用于将当前Descriptor所提供的配置持久化（通过get**方法），为了使save能正常工作，需要提供配置项的get方法。
+  -->
+  <f:section title="Hello World Builder">
+    <f:entry title="French" field="useFrench"
+      description="Check if we should say hello in French">
+      <f:checkbox />
+    </f:entry>
+  </f:section>
+</j:jelly>
