@@ -7,8 +7,7 @@
   -->
 
   <!--
-    Creates a text field that shows the value of the "name" property.
-    When submitted, it will be passed to the corresponding constructor parameter.
+  entry 表示用于交互的html表单域，title将作为表单域label的值，在界面中要显示的内容。   field表示的是HelloWorldBuilder的构造函数中的参数。如果有多个field，就要有多个相对应的参数。textbox 表示简单的渲染一个输入文本，输入的值将赋给name。
   -->
   <f:entry title="Name" field="name">
     <f:textbox />
