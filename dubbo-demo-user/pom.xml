@@ -24,5 +24,26 @@
 		</dependency>
 
 	</dependencies>
-  
+	<repositories>
+		<repository>
+			<id>central_mirror</id>
+			<name>internal central_mirror epository</name>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>jboss</id>
+			<name>jboss</name>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+		<repository>
+			<id>sonatype</id>
+			<name>sonatype</name>
+			<url>http://repository.sonatype.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>OSChina</id>
+			<name>OSChina Central</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+		</repository>
+	</repositories>
 </project>
