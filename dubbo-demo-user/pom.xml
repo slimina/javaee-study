@@ -26,6 +26,11 @@
 	</dependencies>
 	<repositories>
 		<repository>
+			<id>aliyun</id>
+			<name>aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
 			<id>central_mirror</id>
 			<name>internal central_mirror epository</name>
 			<url>http://repo1.maven.org/maven2/</url>
@@ -39,11 +44,6 @@
 			<id>sonatype</id>
 			<name>sonatype</name>
 			<url>http://repository.sonatype.org/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>OSChina</id>
-			<name>OSChina Central</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
 		</repository>
 	</repositories>
 </project>
