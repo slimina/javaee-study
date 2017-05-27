@@ -1,5 +1,6 @@
 package cn.slimsmart.spring.demo.event;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
