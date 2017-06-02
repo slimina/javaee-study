@@ -42,7 +42,6 @@ public class SpringTest{
 		System.out.println("publish event B ...");
 		applicationContext.publishEvent(new BEvent("testB"));
 		System.out.println("publish event end ...");
-		JdbcTemplate
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
