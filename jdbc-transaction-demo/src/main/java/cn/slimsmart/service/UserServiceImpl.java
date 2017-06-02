@@ -1,7 +1,7 @@
 package cn.slimsmart.service;
 
 import cn.slimsmart.aop.transaction.JdbcTemplate;
-import cn.slimsmart.aop.transaction.annotation.Transaction;
+import cn.slimsmart.aop.transaction.annotation.Transactional;
 
 public class UserServiceImpl implements UserService{
 	
@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	@Transaction
+	@Transactional
 	public int save(String name, int age) {
 		jdbcTemplate.insert("insert into user(id,name,age)values(1,'"+name+"',"+age+")");
 		jdbcTemplate.insert("insert into user(id,name,age)values(2,'"+name+"',"+age+")");

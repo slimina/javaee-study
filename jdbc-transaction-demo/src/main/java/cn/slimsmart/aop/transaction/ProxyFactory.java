@@ -7,10 +7,10 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import cn.slimsmart.aop.transaction.annotation.Transaction;
+import cn.slimsmart.aop.transaction.annotation.Transactional;
 
 //代理
-public class FacadeProxy implements InvocationHandler {
+public class ProxyFactory implements InvocationHandler {
 	
 	private DataSource dataSource;
 	
@@ -19,21 +19,14 @@ public class FacadeProxy implements InvocationHandler {
 	}
 	private Object source;
 	
-	public FacadeProxy(Object source){
+	public ProxyFactory(Object source){
 		this.source = source;
 	}
-	public FacadeProxy(){
+	public ProxyFactory(){
 	}
 	public Object invoke(Object proxy, Method method, Object[] args) throws Exception{
-		Method[] methods = source.getClass().getMethods();
-		Method m = null;
-		for(Method met: methods){
-			if(met.getName() == "save"){ //简单判断
-				m=met;
-				break;
-			}
-		}
-    	if(m!=null && m.isAnnotationPresent(Transaction.class)){
+		Method methodImpl = source.getClass().getMethod(method.getName(), method.getParameterTypes());
+    	if(methodImpl!=null && methodImpl.isAnnotationPresent(Transactional.class)){
     		Connection conn = dataSource.getConnection();
     		TransactionManager.set(conn, dataSource);
     		//开启事务
