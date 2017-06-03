@@ -1,10 +1,8 @@
 package cn.slimsmart.service;
 
-import java.lang.reflect.Method;
-
-import cn.slimsmart.aop.transaction.ProxyFactory;
 import cn.slimsmart.aop.transaction.JdbcTemplate;
 import cn.slimsmart.aop.transaction.MyDataSource;
+import cn.slimsmart.aop.transaction.ProxyFactory;
 
 //测试
 public class TestMain {
