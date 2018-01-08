@@ -1,8 +1,5 @@
 package cn.slimsmart.java.lambda.demo;
 
-import java.util.*;
-import java.util.function.Supplier;
-
 /**
  * 闭包
  */
