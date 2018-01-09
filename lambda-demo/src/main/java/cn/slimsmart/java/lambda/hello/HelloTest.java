@@ -2,8 +2,6 @@ package cn.slimsmart.java.lambda.hello;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.function.Function;
-import java.util.function.IntToLongFunction;
 
 public class HelloTest {
 	//接口匿名实现类

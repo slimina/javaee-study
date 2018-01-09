@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 集合操作
@@ -26,6 +27,10 @@ public class Test3 {
         map.put(12,"aaa");
         map.put(null,"bbb");
         map.put(13,"ccc");
+        
+        //转换成Collection
+        System.out.println(map.entrySet().stream().filter(e->e.getKey()!=null).collect(Collectors.toMap(e->((Map.Entry<Integer,String>)e).getKey(), e->((Map.Entry<Integer,String>)e).getValue())));;
+        
         map.putIfAbsent(null,"ddd");//已经存在返回当前值，不覆盖
         map.forEach((key,value)->{
             System.out.println(key+":"+value);
@@ -41,5 +46,6 @@ public class Test3 {
         map.merge(9, "val9", (value, newValue) -> value.concat(newValue));
         map.merge(9, "val10", (value, newValue) -> value.concat(newValue));
         System.out.println(map.get(9));
+        
     }
 }
