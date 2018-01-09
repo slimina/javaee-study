@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import cn.slimsmart.java8.Goods;
 
@@ -20,9 +22,7 @@ public class CollectorsTest {
                         "apple", "orange", "banana", "papaya");
 		Map<String, Long> result = items.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
 		System.out.println(result);
-		
-		
-		
+
 		//增加排序实现
 		Map<String, Long> finalMap = new LinkedHashMap<>();
 		result.entrySet().stream().sorted(Map.Entry.<String,Long>comparingByValue().reversed()).forEachOrdered(e->finalMap.put(e.getKey(), e.getValue()));
@@ -67,7 +67,27 @@ public class CollectorsTest {
 		// group by price, uses 'mapping' to convert List<Item> to Set<String>
 		 Map<BigDecimal, Set<String>> results = goods.stream().collect(Collectors.groupingBy(Goods::getPrice,Collectors.mapping(Goods::getName, Collectors.toSet())));
 		 System.out.println(results);
-		 
-		 
-	}
+
+		Stream<Integer> number = Stream.of(1, 2, 3, 4, 5);
+		List<Integer> result2 = number.filter(x -> x!= 3).collect(Collectors.toList());
+		result2.forEach(x -> System.out.println(x));
+
+        // array 2 stream
+        String[] array = {"a", "b", "c", "d", "e"};
+        //Arrays.stream
+        Stream<String> stream1 = Arrays.stream(array);
+        stream1.forEach(x -> System.out.println(x));
+        //Stream.of
+        Stream<String> stream2 = Stream.of(array);
+        stream2.forEach(x -> System.out.println(x));
+
+        int[] intArray = {1, 2, 3, 4, 5};
+        // 1. Arrays.stream -> IntStream
+        IntStream intStream1 = Arrays.stream(intArray);
+        intStream1.forEach(x -> System.out.println(x));
+        // 2. Stream.of -> Stream<int[]>
+        Stream<int[]> temp = Stream.of(intArray);
+        IntStream intStream2 = temp.flatMapToInt(x -> Arrays.stream(x));
+        intStream2.forEach(x -> System.out.println(x));
+    }
 }
