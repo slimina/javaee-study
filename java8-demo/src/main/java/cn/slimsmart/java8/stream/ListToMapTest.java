@@ -42,7 +42,7 @@ public class ListToMapTest {
         );
         System.out.println(result1);
 
-        Map result2 = goods.stream()
+        Map<String,Integer> result2 = goods.stream()
                 .sorted(Comparator.comparingLong(Goods::getQty).reversed())
                 .collect(
                         Collectors.toMap(

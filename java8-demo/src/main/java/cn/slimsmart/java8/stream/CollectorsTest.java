@@ -1,6 +1,7 @@
 package cn.slimsmart.java8.stream;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -89,5 +90,15 @@ public class CollectorsTest {
         Stream<int[]> temp = Stream.of(intArray);
         IntStream intStream2 = temp.flatMapToInt(x -> Arrays.stream(x));
         intStream2.forEach(x -> System.out.println(x));
+        
+        /*
+        <R> R collect(Supplier<R> supplier, //容器
+                BiConsumer<R, ? super T> accumulator, //计算
+                BiConsumer<R, R> combiner);*/ //合并
+        
+        List<String> lists = goods.parallelStream().map(g->g.getName()).collect(()-> new ArrayList<>(), (c,e)->c.add(e) , (c1,c2)->c1.addAll(c2));
+        //stream.map(Object::toString).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        //stream.map(Object::toString).collect(Collectors.toList());
+        System.out.println(lists);
     }
 }
