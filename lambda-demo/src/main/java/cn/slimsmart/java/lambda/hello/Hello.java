@@ -1,4 +1,5 @@
 package cn.slimsmart.java.lambda.hello;
+
 @FunctionalInterface
 public interface Hello{
 	String sayHello(String name);
