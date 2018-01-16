@@ -21,7 +21,7 @@ public class Test3 {
         list.forEach((x)-> System.out.println(x));
         list.removeIf((x)-> x%2==0);
         list.forEach(System.out::println);//去掉偶数
-
+        
         //Map集合
         Map<Integer, String> map = new HashMap<>();
         map.put(12,"aaa");

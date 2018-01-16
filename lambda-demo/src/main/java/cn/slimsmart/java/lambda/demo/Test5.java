@@ -20,9 +20,9 @@ public class Test5 {
 
         long time = System.currentTimeMillis();
         //串行
-//        long count = values.stream().sorted().count();
+        long count = values.stream().sorted().count();
         //并行 或.stream().parallel()
-        long count = values.parallelStream().sorted().count();
+        //long count = values.parallelStream().sorted().count();
         System.out.println(count);
         System.out.println("cost time :"+(System.currentTimeMillis()-time)+"ms");
     }
