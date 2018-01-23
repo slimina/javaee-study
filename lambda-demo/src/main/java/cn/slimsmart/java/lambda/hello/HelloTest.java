@@ -28,5 +28,15 @@ public class HelloTest {
         System.out.println( Hello.add(11,22));
         //继承object
         System.out.println(hello.hashCode());
+
+        int a = 100; //默认为final
+       // a++; 不可操作
+        //1.8 在lambda、匿名类中使用了外部变量,可以不加final，
+        // 默认为final 不可更改，建议将final加上提高可读性
+        hello =(name)->{
+            System.out.println("a = [" + a + "]");
+            return "hello "+ name;
+        };
+        hello.sayHello("TOM");
     }
 }
