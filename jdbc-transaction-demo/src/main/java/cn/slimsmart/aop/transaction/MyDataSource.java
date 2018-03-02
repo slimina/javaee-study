@@ -17,7 +17,7 @@ public class MyDataSource implements DataSource {
 	private static final String dirverClassName = "com.mysql.jdbc.Driver";
 	private static final String url = "jdbc:mysql://localhost:3306/test";
 	private static final String user = "root";
-	private static final String pswd = "123456";
+	private static final String pswd = "";
 	
 	//模拟线程池
 	private static List<Connection> pool = (List<Connection>) Collections

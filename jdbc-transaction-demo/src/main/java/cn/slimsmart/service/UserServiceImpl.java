@@ -13,9 +13,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Transactional
 	public int save(String name, int age) {
-		jdbcTemplate.insert("insert into user(id,name,age)values(1,'"+name+"',"+age+")");
-		jdbcTemplate.insert("insert into user(id,name,age)values(2,'"+name+"',"+age+")");
-		jdbcTemplate.insert("insert into user(id,name,age)values(1,'"+name+"',"+age+")");
+		jdbcTemplate.insert("insert into user(id,name)values(1,'"+name+"')");
+		jdbcTemplate.insert("insert into user(id,name)values(2,'"+name+"')");
+		jdbcTemplate.insert("insert into user(id,name)values(1,'"+name+"')");
 		return 1;
 	}
 }

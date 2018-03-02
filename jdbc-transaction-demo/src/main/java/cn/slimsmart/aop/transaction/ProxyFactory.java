@@ -31,8 +31,15 @@ public class ProxyFactory implements InvocationHandler {
     		TransactionManager.set(conn, dataSource);
     		//开启事务
     		conn.setAutoCommit(false);
-    		Object obj = method.invoke(source, args);
-    		conn.commit();
+    		Object obj = null;
+			try {
+				obj = method.invoke(source, args);
+				conn.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				conn.rollback();
+				throw e;
+			}
     		TransactionManager.remove();
     		((MyDataSource)dataSource).freeConnection(conn);
     		return obj;
