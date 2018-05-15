@@ -30,6 +30,8 @@ public class UserServiceClient {
 			e.printStackTrace();
 		} catch (TException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            connectionManager.close();
+        }
 	}
 }
