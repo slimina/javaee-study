@@ -13,7 +13,7 @@ public class SSDBClusterTest {
 		BaseResultSet<byte[]> rs= SSDBJ.execute("ssdb_cluster",SSDBCmd.GET,"key");
 		System.out.println(rs.getStatus());
         System.out.println(new String(rs.getResult()));
-        
+
         if(SSDBJ.executeUpdate("ssdb_cluster",SSDBCmd.SET,"key","value22")){
         	rs= SSDBJ.execute("ssdb_cluster",SSDBCmd.GET,"key");
         	System.out.println(rs.getStatus());

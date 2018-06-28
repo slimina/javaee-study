@@ -14,18 +14,9 @@
 	
     <!-- 使用zookeeper注册中心暴露服务地址 -->
    <dubbo:registry protocol="zookeeper" address="192.168.36.91:2181,192.168.36.127:2181" />
-   
-   
-   
-      <!-- 通过注册中心发现监控中心服务
-    或
-<dubbo:monitor address="127.0.0.1:7070" />
-      -->
-    <dubbo:monitor protocol="registry" />
-   
 
 	<!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
-	<dubbo:reference id="userService"
+	<dubbo:reference id="$dubbo_userService"
 		interface="cn.slimsmart.dubbo.demo.user.UserService" />
 
 </beans>

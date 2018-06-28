@@ -21,10 +21,10 @@ public class JredisTest {
 			e.printStackTrace();
 		}
 		jredis.set("key", "abc");
-		if(jredis.exists("key")){  
+		if(jredis.exists("key")){
 		   System.out.println(new String(jredis.get("key")));
-		}  
-		
+		}
+
 		//保存单个对象
 		User user = new User();
 		user.setBirthDate(new Date());
@@ -38,7 +38,7 @@ public class JredisTest {
 		user.setName("lucy");
 		jredis.sadd("userList", user);
 		System.out.println(DefaultCodec.decode(jredis.smembers("userList")));
-		
+
 		//关闭
 		jredis.quit();
 	}

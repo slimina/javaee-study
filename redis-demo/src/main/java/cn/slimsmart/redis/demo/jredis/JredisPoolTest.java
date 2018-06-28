@@ -14,9 +14,9 @@ public class JredisPoolTest {
 	public static void main(String[] args) throws Exception {
 		//链接配置
 		 ConnectionSpec connectionSpec = DefaultConnectionSpec.newSpec("192.168.36.189", 6379, 0,null);
-		 connectionSpec.setReconnectCnt(100);  
+		 connectionSpec.setReconnectCnt(100);
 		 //connectionSpec.setConnectionFlag(Connection.Flag.RELIABLE, Boolean.TRUE);
-		 //connectionSpec.setHeartbeat(5);  
+		 //connectionSpec.setHeartbeat(5);
 		 connectionSpec.setMaxConnectWait(3000);
 		//连接池配置
 		GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
@@ -28,14 +28,14 @@ public class JredisPoolTest {
 		poolConfig.setTestOnReturn(true);
 		poolConfig.setTestWhileIdle(true);
 		poolConfig.setTimeBetweenEvictionRunsMillis(3000);
-		
+
 		JredisPool jredisPool = new JredisPool(connectionSpec,poolConfig);
 		//获取链接
 		JRedis jredis = jredisPool.getResource();
 		jredis.set("key", "abc");
-		if(jredis.exists("key")){  
+		if(jredis.exists("key")){
 		   System.out.println(new String(jredis.get("key")));
-		}  
+		}
 		//保存单个对象
 		User user = new User();
 		user.setBirthDate(new Date());

@@ -65,7 +65,7 @@ public class RedisFailTolerance {
 
 	/**
 	 * try whether the server is available
-	 * 
+	 *
 	 * @param connectionSpec
 	 * @return true or false
 	 */
