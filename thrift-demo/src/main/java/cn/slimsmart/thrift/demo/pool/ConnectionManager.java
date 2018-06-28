@@ -26,15 +26,21 @@ public class ConnectionManager {
 		try {
 			socket = connectionProvider.getConnection();
 			socketThreadSafe.set(socket);
-			return socketThreadSafe.get();
+            return socket;
 		} catch (Exception e) {
 			logger.error("error ConnectionManager.invoke()", e);
-		} finally {
-			connectionProvider.returnCon(socket);
-			socketThreadSafe.remove();
 		}
 		return socket;
 	}
+
+    public TSocket currentSocket() {
+        return socketThreadSafe.get();
+    }
+
+    public void close() {
+        connectionProvider.returnCon(socketThreadSafe.get());
+        socketThreadSafe.remove();
+    }
 
 	public ConnectionProvider getConnectionProvider() {
 		return connectionProvider;
